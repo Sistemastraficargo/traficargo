@@ -100,10 +100,25 @@ md:top-[180px]
 md:right-[-280px]
 md:w-[725px]
 
-z-20
+z-10 md:z-30
 pointer-events-none
 drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
 "
+/>
+<div
+  className="
+  fixed
+  top-[250px]
+  right-[-210px]
+  w-[430px]
+  h-[320px]
+  bg-black/35
+  rounded-[30px]
+  blur-md
+  z-[11]
+  pointer-events-none
+  md:hidden
+  "
 />
      
       {/* NAVBAR */}
@@ -303,7 +318,7 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   transition={{ duration: 1 }}
   className="
 relative
-z-10
+z-20 md:z-10
 text-center
 px-6
 mt-32
@@ -316,13 +331,22 @@ mx-auto
       Logística Internacional Premium
     </p>
 
-    <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-none mb-6 text-center">
+    <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-none mb-6 text-center drop-shadow-[0_8px_25px_rgba(0,0,0,0.95)] md:drop-shadow-none">
       MOVEMOS
       <br />
       EL MUNDO
     </h1>
   
-    <p className="max-w-2xl mx-auto text-white/70 text-lg text-center">
+    <p className="
+max-w-2xl
+mx-auto
+text-white/90
+md:text-white/70
+text-lg
+text-center
+drop-shadow-[0_6px_18px_rgba(0,0,0,0.95)]
+md:drop-shadow-none
+">
       Soluciones estratégicas en logística internacional,
       transportación marítima, aérea y terrestre para empresas globales.
     </p>

@@ -105,21 +105,6 @@ pointer-events-none
 drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
 "
 />
-<div
-  className="
-  fixed
-  top-[250px]
-  right-[-210px]
-  w-[430px]
-  h-[320px]
-  bg-black/35
-  rounded-[30px]
-  blur-md
-  z-[11]
-  pointer-events-none
-  md:hidden
-  "
-/>
      
       {/* NAVBAR */}
       <motion.nav

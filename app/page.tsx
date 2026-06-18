@@ -28,36 +28,41 @@ const containerControls = useAnimationControls();
 const containerSent = useRef(false);
 
 useMotionValueEvent(scrollY, "change", (latest) => {
-  if (latest < 850) {
+  const isMob = window.innerWidth < 768;
+
+  const estacionaEn = isMob ? 420 : 850;
+  const disparaEn = isMob ? 560 : 1050;
+
+  if (latest < estacionaEn) {
     containerSent.current = false;
 
     containerControls.set({
-      x: -latest * 0.18,
-      y: latest * 0.35,
+      x: isMob ? -latest * 0.08 : -latest * 0.18,
+      y: isMob ? latest * 0.18 : latest * 0.35,
       rotate: 0,
-      opacity: 1,
+      opacity: isMob ? 0.75 : 1,
     });
   }
 
-  if (latest >= 850 && latest < 1050) {
+  if (latest >= estacionaEn && latest < disparaEn) {
     containerControls.set({
-      x: -150,
-      y: 300,
+      x: isMob ? -45 : -150,
+      y: isMob ? 80 : 300,
       rotate: 0,
-      opacity: 1,
+      opacity: isMob ? 0.75 : 1,
     });
   }
 
-  if (latest >= 1050 && !containerSent.current) {
+  if (latest >= disparaEn && !containerSent.current) {
     containerSent.current = true;
 
     containerControls.start({
-      x: -1800,
-      y: 300,
-      rotate: -25,
+      x: isMob ? -900 : -1800,
+      y: isMob ? 80 : 300,
+      rotate: isMob ? -15 : -25,
       opacity: 0,
       transition: {
-        duration: 0.45,
+        duration: isMob ? 0.35 : 0.45,
         ease: "easeIn",
       },
     });
@@ -86,15 +91,19 @@ useMotionValueEvent(scrollY, "change", (latest) => {
   }}
   animate={containerControls}
   className="
-  fixed
-  top-[180px]
-  right-[-280px]
-  w-[420px]
-  md:w-[725px]
-  z-30
-  pointer-events-none
-  drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
-  "
+fixed
+top-[250px]
+right-[-210px]
+w-[430px]
+
+md:top-[180px]
+md:right-[-280px]
+md:w-[725px]
+
+z-20
+pointer-events-none
+drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
+"
 />
      
       {/* NAVBAR */}

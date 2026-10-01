@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState, useRef } from "react";
@@ -9,13 +10,40 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 
 export default function Home() {
 
   const [scrolled, setScrolled] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatStep, setChatStep] = useState("inicio");
+
+  const [quoteData, setQuoteData] = useState({
+  operation: "",
+  transport: "",
+  origin: "",
+  destination: "",
+  merchandise: "",
+  weight: "",
+  name: "",
+  company: "",
+  contact: "",
+});
+
+const [chatInput, setChatInput] = useState("");
+const [aiAnswer, setAiAnswer] = useState("");
+const [aiQuestion, setAiQuestion] = useState("");
+const [aiLoading, setAiLoading] = useState(false);
+const [supportData, setSupportData] = useState({
+  reference: "",
+  name: "",
+  company: "",
+  contact: "",
+  problem: "",
+});
 
   const { scrollY } = useScroll();
 
@@ -1294,6 +1322,1065 @@ Solicitar cotización
   </div>
 
 </footer>
+{chatOpen && (
+  <motion.div
+    initial={{ opacity: 0, y: 20, scale: 0.96 }}
+    animate={{ opacity: 1, y: 0, scale: 1 }}
+    className="
+      fixed
+      bottom-28
+      right-6
+      z-[100]
+      w-[calc(100vw-3rem)]
+      max-w-[380px]
+      overflow-hidden
+      rounded-[28px]
+      border
+      border-cyan-400/20
+      bg-[#06131d]/95
+      backdrop-blur-xl
+      shadow-[0_20px_70px_rgba(0,0,0,0.60)]
+    "
+  >
+
+    {/* CABECERA */}
+    <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+
+      <div className="flex items-center gap-3">
+
+        <div className="
+          flex h-10 w-10
+          items-center justify-center
+          rounded-full
+          bg-cyan-500/15
+          text-cyan-300
+        ">
+          <MessageCircle size={20} />
+        </div>
+
+        <div>
+          <p className="font-bold text-white">
+            Asistente Traficargo
+          </p>
+
+          <p className="text-xs text-cyan-300">
+            Asistencia logística
+          </p>
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        onClick={() => setChatOpen(false)}
+        className="
+          rounded-full
+          p-2
+          text-white/60
+          hover:bg-white/10
+          hover:text-white
+          transition
+        "
+      >
+        <X size={20} />
+      </button>
+
+    </div>
+
+    {/* CONVERSACIÓN */}
+    <div className="max-h-[520px] space-y-4 overflow-y-auto p-5">
+
+  <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+    Hola, soy el asistente virtual de Traficargo.
+    Puedo ayudarte a cotizar una operación, resolver dudas logísticas
+    o conectarte con nuestro equipo.
+  </div>
+
+  {/* MENÚ PRINCIPAL */}
+  {chatStep === "inicio" && (
+    <>
+      <p className="text-sm font-semibold text-white">
+        ¿Qué necesitas hacer?
+      </p>
+
+      <div className="grid gap-2">
+        {[
+          "Cotizar una operación",
+          "Tengo una duda logística",
+          "Necesito ayuda con una operación",
+          "Hablar con un asesor",
+        ].map((option) => (
+          <button
+            key={option}
+            type="button"
+            onClick={() => {
+  if (option === "Cotizar una operación") {
+    setChatStep("operacion");
+  }
+
+  if (option === "Tengo una duda logística") {
+    setChatStep("duda");
+  }
+
+  if (option === "Necesito ayuda con una operación") {
+    setChatStep("ayuda");
+  }
+
+  if (option === "Hablar con un asesor") {
+    setChatStep("asesor");
+  }
+}} 
+            className="rounded-xl border border-cyan-400/15 bg-cyan-400/[0.06] px-4 py-3 text-left text-sm text-white/90 transition hover:border-cyan-300/40 hover:bg-cyan-400/10"
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    </>
+  )}
+
+  {/* DUDA LOGÍSTICA */}
+  {chatStep === "duda" && (
+    <>
+      <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
+        Tengo una duda logística
+      </div>
+
+      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+        Claro. Escríbeme tu duda sobre importaciones, exportaciones,
+        transporte marítimo, aéreo, terrestre o procesos logísticos.
+      </div>
+
+      {aiQuestion && (
+        <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
+          {aiQuestion}
+        </div>
+      )}
+
+      {aiAnswer && (
+        <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+          {aiAnswer}
+        </div>
+      )}
+
+      {aiLoading && (
+        <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-cyan-300/70">
+          Consultando al asistente...
+        </div>
+      )}
+
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+
+          const question = chatInput.trim();
+          if (!question || aiLoading) return;
+
+          setAiQuestion(question);
+          setAiAnswer("");
+          setChatInput("");
+          setAiLoading(true);
+
+          try {
+            const response = await fetch("/api/asistente", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ message: question }),
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+              throw new Error(
+                result.message || "No se pudo obtener una respuesta."
+              );
+            }
+
+            setAiAnswer(
+              result.answer ||
+              result.message ||
+              "Respuesta recibida."
+            );
+          } catch (error) {
+            console.error("Error en el asistente:", error);
+
+            setAiAnswer(
+              "El asistente inteligente está temporalmente fuera de servicio. Puedes volver al menú para solicitar una cotización o contactar a nuestro equipo."
+            );
+          } finally {
+            setAiLoading(false);
+          }
+        }}
+        className="flex gap-2"
+      >
+        <input
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
+          placeholder="Escribe tu duda logística..."
+          className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
+          autoFocus
+        />
+
+        <button
+          type="submit"
+          disabled={aiLoading}
+          className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {aiLoading ? "..." : "Enviar"}
+        </button>
+      </form>
+
+      <button
+        type="button"
+        onClick={() => {
+          setChatStep("inicio");
+          setChatInput("");
+          setAiQuestion("");
+          setAiAnswer("");
+        }}
+        className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
+      >
+        Volver al menú
+      </button>
+    </>
+  )}
+{/* AYUDA CON UNA OPERACIÓN */}
+{chatStep === "ayuda" && (
+  <>
+    <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
+      Necesito ayuda con una operación
+    </div>
+
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+      Claro. Si ya tienes una operación con Traficargo, nuestro equipo
+      puede ayudarte con su seguimiento.
+    </div>
+
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+      Para comenzar, indícame tu número o referencia de operación.
+    </div>
+  <form
+  onSubmit={(e) => {
+    e.preventDefault();
+
+    const value = chatInput.trim();
+
+    if (!value) return;
+
+    setSupportData((data) => ({
+      ...data,
+      reference: value,
+    }));
+
+    setChatInput("");
+    setChatStep("ayudaNombre");
+  }}
+  className="flex gap-2"
+>
+  <input
+    value={chatInput}
+    onChange={(e) => setChatInput(e.target.value)}
+    placeholder="Referencia de operación..."
+    className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
+    autoFocus
+  />
+
+  <button
+    type="submit"
+    className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
+  >
+    Enviar
+  </button>
+</form>
+    <button
+      type="button"
+      onClick={() => setChatStep("inicio")}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
+    >
+      Volver al menú
+    </button>
+  </>
+)}
+{/* DATOS PARA AYUDA CON UNA OPERACIÓN */}
+{["ayudaNombre", "ayudaEmpresa", "ayudaContacto", "ayudaProblema"].includes(chatStep) && (
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+
+      {chatStep === "ayudaNombre" &&
+        "Gracias. ¿Cuál es tu nombre?"}
+
+      {chatStep === "ayudaEmpresa" &&
+        "¿De qué empresa nos contactas?"}
+
+      {chatStep === "ayudaContacto" &&
+        "Déjanos un teléfono o correo para poder contactarte."}
+
+      {chatStep === "ayudaProblema" &&
+        "Cuéntanos brevemente qué sucede con tu operación o qué apoyo necesitas."}
+
+    </div>
+
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+
+        const value = chatInput.trim();
+
+        if (!value) return;
+
+        const nextStep: Record<string, string> = {
+          ayudaNombre: "ayudaEmpresa",
+          ayudaEmpresa: "ayudaContacto",
+          ayudaContacto: "ayudaProblema",
+          ayudaProblema: "ayudaResumen",
+        };
+
+        const fieldMap: Record<
+          string,
+          keyof typeof supportData
+        > = {
+          ayudaNombre: "name",
+          ayudaEmpresa: "company",
+          ayudaContacto: "contact",
+          ayudaProblema: "problem",
+        };
+
+        setSupportData((data) => ({
+          ...data,
+          [fieldMap[chatStep]]: value,
+        }));
+
+        setChatInput("");
+        setChatStep(nextStep[chatStep]);
+      }}
+      className="flex gap-2"
+    >
+      <input
+        value={chatInput}
+        onChange={(e) => setChatInput(e.target.value)}
+        placeholder="Escribe aquí..."
+        className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
+        autoFocus
+      />
+
+      <button
+        type="submit"
+        className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
+      >
+        Enviar
+      </button>
+    </form>
+  </>
+)}
+
+{/* RESUMEN DE AYUDA */}
+{chatStep === "ayudaResumen" && (
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
+      Listo, {supportData.name}. Estos son los datos de tu solicitud de apoyo:
+    </div>
+
+    <div className="space-y-1 rounded-2xl border border-cyan-400/15 bg-cyan-400/[0.05] p-4 text-sm text-white/80">
+
+      <p>
+        <span className="text-white/45">Referencia:</span>{" "}
+        {supportData.reference}
+      </p>
+
+      <p>
+        <span className="text-white/45">Nombre:</span>{" "}
+        {supportData.name}
+      </p>
+
+      <p>
+        <span className="text-white/45">Empresa:</span>{" "}
+        {supportData.company}
+      </p>
+
+      <p>
+        <span className="text-white/45">Contacto:</span>{" "}
+        {supportData.contact}
+      </p>
+
+      <p>
+        <span className="text-white/45">Situación:</span>{" "}
+        {supportData.problem}
+      </p>
+
+    </div>
+<button
+  type="button"
+  onClick={async () => {
+    try {
+      const response = await fetch("/api/soporte", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(supportData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.message || "No se pudo enviar la solicitud."
+        );
+      }
+
+      setChatStep("ayudaEnviada");
+    } catch (error) {
+      console.error("Error enviando solicitud de ayuda:", error);
+      alert(
+        "No pudimos enviar tu solicitud en este momento. Inténtalo nuevamente."
+      );
+    }
+  }}
+  className="w-full rounded-xl bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-500"
+>
+  Enviar solicitud de ayuda a Traficargo
+</button> 
+    <button
+      type="button"
+      onClick={() => setChatStep("inicio")}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+    >
+      Volver al menú
+    </button>
+  </>
+)}
+{/* AYUDA ENVIADA */}
+{chatStep === "ayudaEnviada" && (
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+
+      <p className="font-semibold text-cyan-300">
+        ✓ Solicitud registrada
+      </p>
+
+      <p className="mt-2">
+        Gracias, {supportData.name}. Ya tenemos los datos de tu solicitud de apoyo.
+      </p>
+
+      <p className="mt-2 text-white/60">
+        Un integrante del equipo de Traficargo podrá revisar tu operación y ponerse en contacto contigo.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      onClick={() => {
+        setChatStep("inicio");
+        setChatInput("");
+
+        setSupportData({
+          reference: "",
+          name: "",
+          company: "",
+          contact: "",
+          problem: "",
+        });
+      }}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+    >
+      Volver al menú
+    </button>
+  </>
+)}
+{/* HABLAR CON UN ASESOR */}
+{chatStep === "asesor" && (
+  <>
+    <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
+      Hablar con un asesor
+    </div>
+
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+      Claro. Podemos pedirle a un asesor de Traficargo que se ponga en contacto contigo.
+    </div>
+
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+      Para comenzar, ¿cuál es tu nombre?
+    </div>
+
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+
+        const value = chatInput.trim();
+
+        if (!value) return;
+
+        setSupportData({
+          reference: "ASESOR",
+          name: value,
+          company: "",
+          contact: "",
+          problem: "",
+        });
+
+        setChatInput("");
+        setChatStep("asesorEmpresa");
+      }}
+      className="flex gap-2"
+    >
+      <input
+        value={chatInput}
+        onChange={(e) => setChatInput(e.target.value)}
+        placeholder="Tu nombre..."
+        className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
+        autoFocus
+      />
+
+      <button
+        type="submit"
+        className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
+      >
+        Enviar
+      </button>
+    </form>
+
+    <button
+      type="button"
+      onClick={() => {
+        setChatStep("inicio");
+        setChatInput("");
+      }}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
+    >
+      Volver al menú
+    </button>
+  </>
+)}
+{/* DATOS PARA HABLAR CON UN ASESOR */}
+{["asesorEmpresa", "asesorContacto", "asesorMotivo"].includes(chatStep) && (
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+
+      {chatStep === "asesorEmpresa" &&
+        "Gracias. ¿De qué empresa nos contactas?"}
+
+      {chatStep === "asesorContacto" &&
+        "¿A qué teléfono o correo puede contactarte nuestro asesor?"}
+
+      {chatStep === "asesorMotivo" &&
+        "Por último, cuéntanos brevemente en qué podemos ayudarte."}
+
+    </div>
+
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+
+        const value = chatInput.trim();
+
+        if (!value) return;
+
+        const nextStep: Record<string, string> = {
+          asesorEmpresa: "asesorContacto",
+          asesorContacto: "asesorMotivo",
+          asesorMotivo: "asesorResumen",
+        };
+
+        const fieldMap: Record<
+          string,
+          keyof typeof supportData
+        > = {
+          asesorEmpresa: "company",
+          asesorContacto: "contact",
+          asesorMotivo: "problem",
+        };
+
+        setSupportData((data) => ({
+          ...data,
+          [fieldMap[chatStep]]: value,
+        }));
+
+        setChatInput("");
+        setChatStep(nextStep[chatStep]);
+      }}
+      className="flex gap-2"
+    >
+      <input
+        value={chatInput}
+        onChange={(e) => setChatInput(e.target.value)}
+        placeholder="Escribe aquí..."
+        className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
+        autoFocus
+      />
+
+      <button
+        type="submit"
+        className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
+      >
+        Enviar
+      </button>
+    </form>
+  </>
+)}
+
+{/* RESUMEN PARA ASESOR */}
+{chatStep === "asesorResumen" && (
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
+      Listo, {supportData.name}. Confirma tus datos antes de solicitar contacto con un asesor:
+    </div>
+
+    <div className="space-y-1 rounded-2xl border border-cyan-400/15 bg-cyan-400/[0.05] p-4 text-sm text-white/80">
+
+      <p>
+        <span className="text-white/45">Nombre:</span>{" "}
+        {supportData.name}
+      </p>
+
+      <p>
+        <span className="text-white/45">Empresa:</span>{" "}
+        {supportData.company}
+      </p>
+
+      <p>
+        <span className="text-white/45">Contacto:</span>{" "}
+        {supportData.contact}
+      </p>
+
+      <p>
+        <span className="text-white/45">Motivo:</span>{" "}
+        {supportData.problem}
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      onClick={async () => {
+        try {
+          const response = await fetch("/api/asesor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(supportData),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(
+              result.message || "No se pudo enviar la solicitud."
+            );
+          }
+
+          setChatStep("asesorEnviado");
+        } catch (error) {
+          console.error("Error enviando solicitud de asesor:", error);
+          alert(
+            "No pudimos enviar tu solicitud en este momento. Inténtalo nuevamente."
+          );
+        }
+      }}
+      className="w-full rounded-xl bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-500"
+    >
+      Solicitar contacto con un asesor
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setChatStep("inicio")}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
+    >
+      Volver al menú
+    </button>
+  </>
+)}
+
+{/* SOLICITUD DE ASESOR REGISTRADA */}
+{chatStep === "asesorEnviado" && (
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+
+      <p className="font-semibold text-cyan-300">
+        ✓ Solicitud registrada
+      </p>
+
+      <p className="mt-2">
+        Gracias, {supportData.name}. Ya tenemos tus datos para solicitar contacto con un asesor.
+      </p>
+
+      <p className="mt-2 text-white/60">
+        Un asesor de Traficargo podrá revisar tu solicitud y ponerse en contacto contigo.
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      onClick={() => {
+        setChatStep("inicio");
+        setChatInput("");
+
+        setSupportData({
+          reference: "",
+          name: "",
+          company: "",
+          contact: "",
+          problem: "",
+        });
+      }}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+    >
+      Volver al menú
+    </button>
+  </>
+)}
+  {/* IMPORTACIÓN O EXPORTACIÓN */}
+  {chatStep === "operacion" && (
+    <>
+      <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
+        Quiero cotizar una operación
+      </div>
+
+      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
+        Perfecto. ¿Se trata de una importación o una exportación?
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {["Importación", "Exportación"].map((operation) => (
+          <button
+            key={operation}
+            type="button"
+            onClick={() => {
+              setQuoteData((data) => ({
+                ...data,
+                operation,
+              }));
+
+              setChatStep("transporte");
+            }}
+            className="rounded-xl border border-cyan-400/15 bg-cyan-400/[0.06] px-4 py-3 text-sm text-white/90 transition hover:bg-cyan-400/10"
+          >
+            {operation}
+          </button>
+        ))}
+      </div>
+    </>
+  )}
+
+  {/* TIPO DE TRANSPORTE */}
+  {chatStep === "transporte" && (
+    <>
+      <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
+        {quoteData.operation}
+      </div>
+
+      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
+        ¿Qué tipo de transporte necesitas?
+      </div>
+
+      <div className="grid gap-2">
+        {[
+          "Marítimo",
+          "Aéreo",
+          "Terrestre",
+          "No sé cuál necesito",
+        ].map((transport) => (
+          <button
+            key={transport}
+            type="button"
+            onClick={() => {
+              setQuoteData((data) => ({
+                ...data,
+                transport,
+              }));
+
+              setChatStep("origen");
+            }}
+            className="rounded-xl border border-cyan-400/15 bg-cyan-400/[0.06] px-4 py-3 text-left text-sm text-white/90 transition hover:bg-cyan-400/10"
+          >
+            {transport}
+          </button>
+        ))}
+      </div>
+    </>
+  )}
+
+  {/* PREGUNTAS ESCRITAS */}
+  {[
+    "origen",
+    "destino",
+    "mercancia",
+    "peso",
+    "nombre",
+    "empresa",
+    "contacto",
+  ].includes(chatStep) && (
+    <>
+      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+
+        {chatStep === "origen" &&
+          "¿Desde qué ciudad, puerto o aeropuerto sale tu mercancía?"}
+
+        {chatStep === "destino" &&
+          "¿A qué ciudad, puerto o aeropuerto debe llegar?"}
+
+        {chatStep === "mercancia" &&
+          "¿Qué tipo de mercancía necesitas transportar?"}
+
+        {chatStep === "peso" &&
+          "¿Conoces el peso, volumen o dimensiones aproximadas? Si no lo sabes, escribe “No lo sé”."}
+
+        {chatStep === "nombre" &&
+          "Muy bien. ¿Cuál es tu nombre?"}
+
+        {chatStep === "empresa" &&
+          "¿De qué empresa nos contactas?"}
+
+        {chatStep === "contacto" &&
+          "Por último, déjanos un teléfono o correo para que un asesor pueda contactarte."}
+
+      </div>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          const value = chatInput.trim();
+
+          if (!value) return;
+
+          const nextStep: Record<string, string> = {
+            origen: "destino",
+            destino: "mercancia",
+            mercancia: "peso",
+            peso: "nombre",
+            nombre: "empresa",
+            empresa: "contacto",
+            contacto: "resumen",
+          };
+
+          const fieldMap: Record<
+            string,
+            keyof typeof quoteData
+          > = {
+            origen: "origin",
+            destino: "destination",
+            mercancia: "merchandise",
+            peso: "weight",
+            nombre: "name",
+            empresa: "company",
+            contacto: "contact",
+          };
+
+          setQuoteData((data) => ({
+            ...data,
+            [fieldMap[chatStep]]: value,
+          }));
+
+          setChatInput("");
+
+          setChatStep(nextStep[chatStep]);
+        }}
+        className="flex gap-2"
+      >
+        <input
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
+          placeholder="Escribe aquí..."
+          className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
+          autoFocus
+        />
+
+        <button
+          type="submit"
+          className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
+        >
+          Enviar
+        </button>
+      </form>
+    </>
+  )}
+
+  {/* RESUMEN */}
+  {chatStep === "resumen" && (
+    <>
+      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
+        Listo, {quoteData.name}. Ya tengo los datos principales de tu solicitud:
+      </div>
+
+      <div className="space-y-1 rounded-2xl border border-cyan-400/15 bg-cyan-400/[0.05] p-4 text-sm text-white/80">
+
+        <p>
+          <span className="text-white/45">Operación:</span>{" "}
+          {quoteData.operation}
+        </p>
+
+        <p>
+          <span className="text-white/45">Transporte:</span>{" "}
+          {quoteData.transport}
+        </p>
+
+        <p>
+          <span className="text-white/45">Origen:</span>{" "}
+          {quoteData.origin}
+        </p>
+
+        <p>
+          <span className="text-white/45">Destino:</span>{" "}
+          {quoteData.destination}
+        </p>
+
+        <p>
+          <span className="text-white/45">Mercancía:</span>{" "}
+          {quoteData.merchandise}
+        </p>
+
+        <p>
+          <span className="text-white/45">Peso / volumen:</span>{" "}
+          {quoteData.weight}
+        </p>
+
+        <p>
+          <span className="text-white/45">Empresa:</span>{" "}
+          {quoteData.company}
+        </p>
+
+        <p>
+          <span className="text-white/45">Contacto:</span>{" "}
+          {quoteData.contact}
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        onClick={async () => {
+  try {
+    const response = await fetch("/api/cotizaciones", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(quoteData),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.message || "No se pudo enviar la solicitud."
+      );
+    }
+
+    setChatStep("enviado");
+  } catch (error) {
+    console.error("Error al enviar la cotización:", error);
+    alert(
+      "No pudimos enviar tu solicitud. Intenta nuevamente."
+    );
+  }
+}}
+        className="w-full rounded-xl bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-500"
+      >
+        Enviar solicitud a Traficargo
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          setChatStep("inicio");
+
+          setQuoteData({
+            operation: "",
+            transport: "",
+            origin: "",
+            destination: "",
+            merchandise: "",
+            weight: "",
+            name: "",
+            company: "",
+            contact: "",
+          });
+        }}
+        className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
+      >
+        Iniciar otra consulta
+      </button>
+        </>
+  )}
+
+  {/* SOLICITUD ENVIADA */}
+  {chatStep === "enviado" && (
+    <>
+      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+        <p className="font-semibold text-cyan-300">
+          ✓ Solicitud recibida
+        </p>
+
+        <p className="mt-2">
+          Gracias, {quoteData.name}. Tu solicitud de cotización fue
+          recibida correctamente por Traficargo.
+        </p>
+
+        <p className="mt-2 text-white/60">
+          Un asesor revisará la información y se pondrá en contacto contigo.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => {
+          setChatStep("inicio");
+
+          setQuoteData({
+            operation: "",
+            transport: "",
+            origin: "",
+            destination: "",
+            merchandise: "",
+            weight: "",
+            name: "",
+            company: "",
+            contact: "",
+          });
+        }}
+        className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
+      >
+        Iniciar otra consulta
+      </button>
+    </>
+  )}
+
+</div>
+
+  </motion.div>
+)}
+{/* BOT TRAFICARGO */}
+<button
+  type="button"
+  onClick={() => setChatOpen(!chatOpen)}
+  className="
+    fixed
+    bottom-6
+    right-6
+    z-[100]
+    w-16
+    h-16
+    rounded-full
+    bg-cyan-600
+    hover:bg-cyan-500
+    flex
+    items-center
+    justify-center
+    shadow-[0_0_35px_rgba(34,211,238,0.45)]
+    transition
+    duration-300
+    hover:scale-110
+  "
+  aria-label="Abrir asistente Traficargo"
+>
+  <MessageCircle size={28} />
+</button>
 
     </main>
   );

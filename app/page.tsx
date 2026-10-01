@@ -597,65 +597,85 @@ viewport={{ once: true }}
 
     </div>
 
-    <div className="grid md:grid-cols-2 gap-8">
+    {/* ADN + AMANAC */}
+<div className="grid md:grid-cols-2 gap-8">
 
-     <a
-  href="https://adnlogistico.com"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="
-  group
-  relative
-  overflow-hidden
-  rounded-[35px]
-  border border-cyan-400/10
-  h-[230px]
-  "
->
-
-  <img
-    src="/adnl.jpg"
-    alt="ADN Logístico"
+  <a
+    href="https://adnlogistico.com"
+    target="_blank"
+    rel="noopener noreferrer"
     className="
-    absolute inset-0
-    w-full h-full
-    object-cover
-    group-hover:scale-110
-    transition duration-700
+      group relative overflow-hidden
+      rounded-[35px]
+      border border-cyan-400/10
+      h-[230px]
     "
-  />
+  >
+    <img
+      src="/adnl.jpg"
+      alt="ADN Logístico"
+      className="
+        absolute inset-0
+        w-full h-full
+        object-cover
+        group-hover:scale-110
+        transition duration-700
+      "
+    />
+  </a>
 
-      </a>
-
-      <a
-        href="https://www.amanac.org.mx/sitio2008/index.html"
-        target="_blank"
-  rel="noopener noreferrer"
-  className="
-  group
-  relative
-  overflow-hidden
-  rounded-[35px]
-  border border-cyan-400/10
-  h-[230px]
-  "
-      >
-
-        <img
-          src="/amanac.png"
-         alt="AMANAC"
+  <a
+    href="https://www.amanac.org.mx/sitio2008/index.html"
+    target="_blank"
+    rel="noopener noreferrer"
     className="
-    absolute inset-0
-    w-full h-full
-    object-cover
-    group-hover:scale-110
-    transition duration-700
+      group relative overflow-hidden
+      rounded-[35px]
+      border border-cyan-400/10
+      h-[230px]
     "
-        />
+  >
+    <img
+      src="/amanac.png"
+      alt="AMANAC"
+      className="
+        absolute inset-0
+        w-full h-full
+        object-cover
+        group-hover:scale-110
+        transition duration-700
+      "
+    />
+  </a>
 
-      </a>
-
-    </div>
+</div>
+{/* BNG */}
+<div className="mt-8 mx-auto bng-card">
+  <a
+    href="https://bnglogisticsnetwork.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="
+      group relative block overflow-hidden
+      rounded-[35px]
+      border border-cyan-400/10
+      h-[230px]
+      w-full
+    "
+  >
+    <img
+      src="/bng.png"
+      alt="BNG Logistics Network"
+      className="
+        absolute inset-0
+        w-full h-full
+        object-cover
+        group-hover:scale-110
+        transition duration-700
+      "
+    />
+  </a>
+</div>
 
   </div>
 
@@ -2383,5 +2403,6 @@ Solicitar cotización
 </button>
 
     </main>
+   
   );
 }

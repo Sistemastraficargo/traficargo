@@ -11,14 +11,223 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { Menu, X, MessageCircle } from "lucide-react";
+type SiteLanguage = "es" | "en";
+const translations = {
+  es: {
+    // NAVEGACIÓN
+    home: "Inicio",
+    about: "Nosotros",
+    services: "Servicios",
+    offices: "Sucursales",
+    blog: "Blog",
+
+    // HERO
+    heroSubtitle: "Logística Internacional Premium",
+    heroTitle1: "MOVEMOS",
+    heroTitle2: "EL MUNDO",
+    heroDescription:
+      "Soluciones estratégicas en logística internacional, transportación marítima, aérea y terrestre para empresas globales.",
+    quoteNow: "Cotizar ahora",
+    viewServices: "Ver servicios",
+
+    // ESTADÍSTICAS
+    experienceTitle: "Años de experiencia",
+    experienceDescription:
+      "Operaciones logísticas internacionales con estándares premium.",
+    clientsTitle: "Clientes globales",
+    clientsDescription:
+      "Cobertura marítima, aérea, terrestre y aduanal en México.",
+    monitoringTitle: "Monitoreo operativo",
+    monitoringDescription:
+      "Seguimiento y trazabilidad internacional en tiempo real.",
+
+    // NOSOTROS
+    aboutSubtitle: "Sobre nosotros",
+    aboutTitle: "Más de una década moviendo negocios globales.",
+    aboutDescription1:
+      "Somos una compañía fundada en 2013 especializada en soluciones logísticas internacionales para importadores y exportadores.",
+    aboutDescription2:
+      "Nuestro enfoque combina experiencia, estrategia y tecnología para optimizar operaciones marítimas, terrestres y aéreas con estándares internacionales.",
+
+    // NETWORKS
+    networksSubtitle: "Redes Estratégicas",
+    networksTitle:
+      "Miembros oficiales de importantes networks logísticos",
+
+    // MISIÓN Y VISIÓN
+    essenceSubtitle: "Nuestra Esencia",
+    essenceTitle: "Impulsamos el Comercio Global",
+    mission: "Misión",
+    missionTitle: "Soluciones logísticas eficientes",
+    missionDescription:
+      "Estrategias y alternativas para importadores y exportadores con un servicio competitivo y de alta calidad.",
+    vision: "Visión",
+    visionTitle: "Liderazgo logístico global",
+    visionDescription:
+      "Consolidarnos como una empresa capaz de generar impacto real en los negocios de nuestros clientes.",
+    brochure: "Ver Brochure",
+
+    // SERVICIOS
+    servicesTitle: "Soluciones logísticas integrales",
+    seaFreight: "Carga marítima",
+    airFreight: "Carga aérea",
+    landFreight: "Transporte terrestre",
+    customs: "Despacho aduanal",
+    cargoInsurance: "Seguro de carga",
+    cargoHandling: "Acondicionamiento de carga",
+    learnMore: "Ver más",
+
+    // OFICINAS
+    mexicoWorld: "Conectamos México con el Mundo",
+    officesTitle: "CONOCE NUESTRAS OFICINAS",
+    viewLocation: "Ver ubicación en Google Maps",
+
+    // COTIZACIÓN
+    quoteTitle: "Solicita una cotización",
+    quoteDescription:
+      "Un asesor especializado se pondrá en contacto contigo.",
+    name: "Nombre",
+    company: "Empresa",
+    email: "Correo",
+    phone: "Teléfono",
+    origin: "Origen",
+    destination: "Destino",
+    merchandise: "Tipo de mercancía",
+    operationDescription: "Describe tu operación",
+    requestQuote: "Solicitar cotización",
+
+    // FOOTER
+    footerDescription:
+      "Logística Internacional Premium para empresas globales.",
+    navigation: "Navegación",
+    contact: "Contacto",
+    privacy: "Aviso de Privacidad",
+    terms: "Términos y Condiciones",
+    rights: "Todos los derechos reservados.",
+  },
+
+  en: {
+    // NAVIGATION
+    home: "Home",
+    about: "About Us",
+    services: "Services",
+    offices: "Our Offices",
+    blog: "Blog",
+
+    // HERO
+    heroSubtitle: "Premium International Logistics",
+    heroTitle1: "MOVING",
+    heroTitle2: "THE WORLD",
+    heroDescription:
+      "Strategic international logistics solutions, including ocean, air, and ground freight services for businesses worldwide.",
+    quoteNow: "Request a Quote",
+    viewServices: "Explore Our Services",
+
+    // STATISTICS
+    experienceTitle: "Years of Experience",
+    experienceDescription:
+      "International logistics operations delivered to premium standards.",
+    clientsTitle: "Global Clients",
+    clientsDescription:
+      "Ocean, air, ground freight, and customs brokerage services throughout Mexico.",
+    monitoringTitle: "Operational Monitoring",
+    monitoringDescription:
+      "Real-time international shipment tracking and visibility.",
+
+    // ABOUT US
+    aboutSubtitle: "About Us",
+    aboutTitle: "Over a decade connecting businesses worldwide.",
+    aboutDescription1:
+      "Founded in 2013, we specialize in international logistics solutions for importers and exporters.",
+    aboutDescription2:
+      "We combine expertise, strategic planning, and technology to optimize ocean, ground, and air freight operations in line with international standards.",
+
+    // NETWORKS
+    networksSubtitle: "Strategic Partnerships",
+    networksTitle:
+      "Proud members of leading international logistics networks",
+
+    // MISSION AND VISION
+    essenceSubtitle: "Our Core Values",
+    essenceTitle: "Driving Global Trade",
+    mission: "Mission",
+    missionTitle: "Efficient Logistics Solutions",
+    missionDescription:
+      "Providing importers and exporters with strategic alternatives, competitive solutions, and high-quality service.",
+    vision: "Vision",
+    visionTitle: "Global Logistics Leadership",
+    visionDescription:
+      "To establish ourselves as a logistics company that makes a meaningful impact on our clients' businesses.",
+    brochure: "View Brochure",
+
+    // SERVICES
+    servicesTitle: "Comprehensive Logistics Solutions",
+    seaFreight: "Ocean Freight",
+    airFreight: "Air Freight",
+    landFreight: "Ground Transportation",
+    customs: "Customs Brokerage",
+    cargoInsurance: "Cargo Insurance",
+    cargoHandling: "Cargo Handling",
+    learnMore: "Learn More",
+
+    // OFFICES
+    mexicoWorld: "Connecting Mexico to the World",
+    officesTitle: "EXPLORE OUR OFFICES",
+    viewLocation: "View Location on Google Maps",
+
+    // QUOTATION
+    quoteTitle: "Request a Quote",
+    quoteDescription:
+      "One of our logistics specialists will contact you shortly.",
+    name: "Full Name",
+    company: "Company",
+    email: "Email Address",
+    phone: "Phone Number",
+    origin: "Origin",
+    destination: "Destination",
+    merchandise: "Type of Cargo",
+    operationDescription: "Tell us about your shipment",
+    requestQuote: "Submit Quote Request",
+
+    // FOOTER
+    footerDescription:
+      "Premium International Logistics for businesses worldwide.",
+    navigation: "Navigation",
+    contact: "Contact",
+    privacy: "Privacy Policy",
+    terms: "Terms and Conditions",
+    rights: "All rights reserved.",
+  },
+} as const;
 
 export default function Home() {
   // TRAFICARGO - Desarrollo bilingüe ES/EN
+  const [siteLanguage, setSiteLanguage] = useState<SiteLanguage | null>(null);
+const [languageLoaded, setLanguageLoaded] = useState(false);
+
+useEffect(() => {
+  const savedLanguage = localStorage.getItem("traficargo-language");
+
+  if (savedLanguage === "es" || savedLanguage === "en") {
+    setSiteLanguage(savedLanguage);
+    document.documentElement.lang = savedLanguage;
+  }
+
+  setLanguageLoaded(true);
+}, []);
+
+const chooseLanguage = (language: SiteLanguage) => {
+  localStorage.setItem("traficargo-language", language);
+
+  document.documentElement.lang = language;
+
+  setSiteLanguage(language);
+};
+const t = translations[siteLanguage ?? "es"];
 
   const [scrolled, setScrolled] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [chatOpen, setChatOpen] = useState(false);
   const [chatStep, setChatStep] = useState("inicio");
 
@@ -109,6 +318,128 @@ useMotionValueEvent(scrollY, "change", (latest) => {
 
   return (
     <main className="bg-black text-white min-h-screen overflow-hidden">
+    {/* PANTALLA DE BIENVENIDA BILINGÜE */}
+
+{languageLoaded && !siteLanguage && (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.6 }}
+    className="
+      fixed inset-0 z-[200]
+      flex items-center justify-center
+      bg-[#04131d]
+      px-6
+    "
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="welcome-title"
+  >
+    <div
+      className="
+        w-full max-w-2xl
+        rounded-[35px]
+        border border-cyan-400/20
+        bg-white/[0.04]
+        backdrop-blur-xl
+        p-10 md:p-16
+        text-center
+        shadow-[0_0_80px_rgba(34,211,238,0.12)]
+      "
+    >
+
+      {/* LOGOTIPO */}
+
+      <motion.img
+        src="/logo.png"
+        alt="Traficargo Internacional"
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="
+          mx-auto
+          mb-10
+          h-28 md:h-36
+          w-auto
+          object-contain
+        "
+      />
+
+      {/* BIENVENIDA */}
+
+      <motion.h1
+        id="welcome-title"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="
+          text-3xl md:text-5xl
+          font-black
+          text-white
+          mb-5
+        "
+      >
+        Bienvenido / Welcome
+      </motion.h1>
+
+      <p className="text-white/60 text-lg mb-12">
+        Selecciona tu idioma
+        <br />
+        Select your language
+      </p>
+
+      {/* BOTONES */}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+        <button
+          type="button"
+          onClick={() => chooseLanguage("es")}
+          className="
+            border border-cyan-400/30
+            bg-cyan-700
+            hover:bg-cyan-600
+            text-white
+            py-5
+            rounded-2xl
+            font-bold
+            text-lg
+            transition-all duration-300
+            hover:scale-105
+          "
+        >
+          ESPAÑOL
+        </button>
+
+        <button
+          type="button"
+          onClick={() => chooseLanguage("en")}
+          className="
+            border border-cyan-400/30
+            bg-cyan-700
+            hover:bg-cyan-600
+            text-white
+            py-5
+            rounded-2xl
+            font-bold
+            text-lg
+            transition-all duration-300
+            hover:scale-105
+          "
+        >
+          ENGLISH
+        </button>
+
+      </div>
+
+      <p className="mt-12 text-white/30 text-xs tracking-[0.3em] uppercase">
+        Connecting businesses worldwide
+      </p>
+
+    </div>
+  </motion.div>
+)}
       <motion.img
   src="/contenedor-abierto.png"
   alt="Contenedor"
@@ -170,7 +501,7 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   pb-1
   "
 >
-  Inicio
+  {t.home}
 
   <span
     className="
@@ -197,7 +528,7 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   pb-1
   "
 >
-  Nosotros
+  {t.about}
 
   <span
     className="
@@ -224,7 +555,7 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   pb-1
   "
 >
-  Servicios
+  {t.services}
 
   <span
     className="
@@ -251,7 +582,7 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   pb-1
   "
 >
-  Sucursales
+  {t.offices}
 
   <span
     className="
@@ -268,11 +599,45 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   />
 </a>
 <a href="/blog" className="hover:text-cyan-400 transition">
-  Blog
+  {t.blog}
 </a>
 
 </div>
+{/* SELECTOR DE IDIOMA */}
 
+<div className="flex items-center gap-3 text-sm font-bold">
+
+  <button
+    type="button"
+    onClick={() => chooseLanguage("es")}
+    aria-label="Cambiar a español"
+    aria-pressed={siteLanguage === "es"}
+    className={`transition ${
+      siteLanguage === "es"
+        ? "text-cyan-400"
+        : "text-white/60 hover:text-cyan-400"
+    }`}
+  >
+    ES
+  </button>
+
+  <span className="text-white/30">|</span>
+
+  <button
+    type="button"
+    onClick={() => chooseLanguage("en")}
+    aria-label="Switch to English"
+    aria-pressed={siteLanguage === "en"}
+    className={`transition ${
+      siteLanguage === "en"
+        ? "text-cyan-400"
+        : "text-white/60 hover:text-cyan-400"
+    }`}
+  >
+    EN
+  </button>
+
+</div>
 <button
   onClick={() => setMenuOpen(!menuOpen)}
   className="md:hidden text-white"
@@ -342,14 +707,14 @@ mx-auto
 "
 >
     <p className="uppercase tracking-[0.4em] text-sm text-blue-400 mb-6 text-center">
-      Logística Internacional Premium
-    </p>
+    {t.heroSubtitle}
+   </p>
 
     <h1 className="text-4xl sm:text-6xl md:text-8xl font-black leading-none mb-6 text-center drop-shadow-[0_8px_25px_rgba(0,0,0,0.95)] md:drop-shadow-none">
-      MOVEMOS
-      <br />
-      EL MUNDO
-    </h1>
+  {t.heroTitle1}
+  <br />
+  {t.heroTitle2}
+</h1>
   
     <p className="
 max-w-2xl
@@ -361,8 +726,7 @@ text-center
 drop-shadow-[0_6px_18px_rgba(0,0,0,0.95)]
 md:drop-shadow-none
 ">
-      Soluciones estratégicas en logística internacional,
-      transportación marítima, aérea y terrestre para empresas globales.
+      {t.heroDescription}
     </p>
 
     <div className="mt-10 flex justify-center gap-4 flex-wrap">
@@ -378,14 +742,14 @@ md:drop-shadow-none
   font-semibold
   "
 >
-  Cotizar ahora
+  {t.quoteNow}
 </a>
 
       <a
   href="#servicios"
   className="border border-white/20 hover:bg-white/10 transition px-8 py-4 rounded-full"
 >
-  Ver servicios
+  {t.viewServices}
 </a>
 
     </div>
@@ -427,12 +791,11 @@ md:drop-shadow-none
       </h3>
 
       <p className="text-2xl font-bold mb-4">
-        Años de experiencia
+        {t.experienceTitle}
       </p>
 
       <p className="text-white/60 leading-relaxed">
-        Operaciones logísticas internacionales con
-        estándares premium.
+        {t.experienceDescription}
       </p>
     </motion.div>
 
@@ -455,12 +818,11 @@ md:drop-shadow-none
       </h3>
 
       <p className="text-2xl font-bold mb-4">
-        Clientes globales
+        {t.globalClients}
       </p>
 
       <p className="text-white/60 leading-relaxed">
-        Cobertura marítima, aérea, terrestre y aduanal
-        en México.
+        {t.clientsDescription}
       </p>
     </motion.div>
 
@@ -482,7 +844,7 @@ md:drop-shadow-none
       </h3>
 
       <p className="text-2xl font-bold mb-4">
-        Monitoreo operativo
+        {t.operationalMonitoring}
       </p>
 
       <p className="text-white/60 leading-relaxed">
@@ -499,7 +861,8 @@ md:drop-shadow-none
 </section>
 
       {/* NOSOTROS */}
-      {/* EXPERIENCE SECTION */}
+{/* EXPERIENCE SECTION */}
+
 <motion.section
   initial={{ opacity: 0 }}
   whileInView={{ opacity: 1 }}
@@ -516,16 +879,26 @@ md:drop-shadow-none
       repeat: Infinity,
       ease: "easeInOut",
     }}
-   className="flex gap-8 px-8"
+    className="flex gap-8 px-8"
   >
-    {[
-      "Logística Global",
-      "Importación",
-      "Exportación",
-      "Carga Premium",
-      "Despacho Aduanal",
-      "Transporte Internacional",
-    ].map((item) => (
+    {(siteLanguage === "en"
+      ? [
+          "Global Logistics",
+          "Import Services",
+          "Export Services",
+          "Premium Cargo",
+          "Customs Clearance",
+          "International Transportation",
+        ]
+      : [
+          "Logística Global",
+          "Importación",
+          "Exportación",
+          "Carga Premium",
+          "Despacho Aduanal",
+          "Transporte Internacional",
+        ]
+    ).map((item) => (
       <div
         key={item}
         className="
@@ -535,7 +908,10 @@ md:drop-shadow-none
           bg-white/[0.03]
           border border-cyan-400/10
           backdrop-blur-xl
-          flex items-center justify-center
+          flex items-center
+          justify-center
+          text-center
+          px-6
           text-2xl md:text-3xl
           font-black
           shadow-[0_0_40px_rgba(34,211,238,0.08)]
@@ -544,38 +920,33 @@ md:drop-shadow-none
         {item}
       </div>
     ))}
-    
   </motion.div>
 </motion.section>
-      <motion.section
-        id="nosotros"
-        initial={{ opacity: 0, y: 100 }}
-whileInView={{ opacity: 1, y: 0 }}
-transition={{ duration: 1 }}
-viewport={{ once: true }}
-        className="py-5 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-16"
-      >
+        <motion.section
+  id="nosotros"
+  initial={{ opacity: 0, y: 100 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1 }}
+  viewport={{ once: true }}
+  className="py-5 px-6 max-w-7xl mx-auto grid md:grid-cols-2 gap-16"
+>
         <div>
           <p className="text-blue-400 uppercase tracking-[0.3em] mb-4">
-            Sobre nosotros
+            {t.aboutSubtitle}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-bold mb-8">
-            Más de una década moviendo negocios globales.
+            {t.aboutTitle}
           </h2>
         </div>
 
         <div className="text-white/70 text-lg leading-relaxed space-y-5">
           <p>
-            Somos una compañía fundada en 2013 especializada en
-            soluciones logísticas internacionales para importadores y
-            exportadores.
+            {t.aboutDescription1}
           </p>
 
           <p>
-            Nuestro enfoque combina experiencia, estrategia y tecnología
-            para optimizar operaciones marítimas, terrestres y aéreas
-            con estándares internacionales.
+            {t.aboutDescription2}
           </p>
         </div>
       </motion.section>
@@ -589,11 +960,11 @@ viewport={{ once: true }}
     <div className="text-center mb-12">
 
       <p className="uppercase tracking-[0.3em] text-cyan-400 mb-4">
-        Redes Estratégicas
+        {t.strategicNetworks}
       </p>
 
       <h2 className="text-4xl md:text-6xl font-black">
-        Miembros oficiales de importantes networks logísticos
+        {t.networksTitle}
       </h2>
 
     </div>
@@ -685,11 +1056,11 @@ viewport={{ once: true }}
 <div className="text-center mb-20">
 
   <p className="uppercase tracking-[0.3em] text-blue-400 mb-4">
-    Nuestra Esencia
+    {t.essenceSubtitle}
   </p>
 
   <h2 className="text-5xl md:text-7xl font-black">
-    Impulsamos el Comercio Global
+    {t.essenceTitle}
   </h2>
 
 </div>
@@ -724,15 +1095,15 @@ viewport={{ once: true }}
       <div className="relative z-10 p-10 flex flex-col justify-end h-full">
 
         <p className="uppercase tracking-[0.3em] text-blue-400 mb-3">
-          Misión
+          {t.mission}
         </p>
 
         <h3 className="text-4xl font-black mb-4">
-          Soluciones logísticas eficientes
+          {t.missionTitle}
         </h3>
 
         <p className="text-white/70 mb-6">
-          Estrategias y alternativas para importadores y exportadores con un servicio competitivo y de alta calidad.
+          {t.missionDescription}
         </p>
 
         <a
@@ -747,7 +1118,7 @@ viewport={{ once: true }}
           w-fit
           "
         >
-          Ver Brochure
+          {t.brochure}
         </a>
 
       </div>
@@ -783,15 +1154,15 @@ viewport={{ once: true }}
       <div className="relative z-10 p-10 flex flex-col justify-end h-full">
 
         <p className="uppercase tracking-[0.3em] text-blue-400 mb-3">
-          Visión
+          {t.vision}
         </p>
 
         <h3 className="text-4xl font-black mb-4">
-          Liderazgo logístico global
+          {t.visionTitle}
         </h3>
 
         <p className="text-white/70 mb-6">
-          Consolidarnos como una empresa capaz de generar impacto real en los negocios de nuestros clientes.
+          {t.visionDescription}
         </p>
 
         <a
@@ -806,7 +1177,7 @@ viewport={{ once: true }}
           w-fit
           "
         >
-          Ver Brochure
+          {t.brochure}
         </a>
 
       </div>
@@ -828,47 +1199,42 @@ viewport={{ once: true }}
       >
         <div className="max-w-7xl mx-auto">
           <p className="text-blue-400 uppercase tracking-[0.3em] mb-4">
-            Servicios
+            {t.services}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-bold mb-16">
-            Soluciones logísticas integrales
+            {t.servicesTitle}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
            {[
   {
-    title: "Carga marítima",
+    title: t.seaFreight,
     link: "/servicios/maritimo",
     image: "/maritimo.jpg",
   },
-
   {
-    title: "Carga aérea",
+    title: t.airFreight,
     link: "/servicios/aereo",
     image: "/aereo.jpg",
   },
-
   {
-    title: "Servicios terrestre",
+    title: t.landFreight,
     link: "/servicios/terrestre",
     image: "/terrestre.jpg",
   },
-
   {
-    title: "Despacho aduanal",
+    title: t.customs,
     link: "/servicios/aduanal",
     image: "/despacho.jpg",
   },
-
   {
-    title: "Seguro de carga",
+    title: t.cargoInsurance,
     link: "/servicios/seguro",
     image: "/seguro.jpg",
   },
-
   {
-    title: "Acondicionamiento de carga",
+    title: t.cargoHandling,
     link: "/servicios/acondicionamiento",
     image: "/acondicionamiento.jpg",
   },
@@ -922,7 +1288,7 @@ transition duration-[2000ms]
           </h3>
 
           <p className="text-white/70 text-sm uppercase tracking-[0.2em]">
-            Ver más
+            {t.learnMore}
           </p>
         </div>
       </div>
@@ -940,10 +1306,10 @@ transition duration-[2000ms]
   <div className="text-center mb-12">
 
   <p className="uppercase tracking-[0.3em] text-cyan-400 mb-3">
-    Conectamos México con el Mundo
+    {t.mexicoWorld}
   </p>
   <h3 className="text-4xl md:text-6xl font-black">
-    CONOCE NUESTRAS OFICINAS
+    {t.officesTitle}
   </h3>
     <div className="relative mx-auto w-full max-w-5xl aspect-[16/9]">
 
@@ -1109,7 +1475,7 @@ viewport={{ once: true }}
     </h3>
 
     <p className="text-white/60">
-      Ver ubicación en Google Maps
+      {t.viewLocation}
     </p>
 
   </a>

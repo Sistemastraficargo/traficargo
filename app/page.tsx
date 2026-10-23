@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Menu, X, MessageCircle } from "lucide-react";
 
 export default function Home() {
+  // TRAFICARGO - Desarrollo bilingüe ES/EN
 
   const [scrolled, setScrolled] = useState(false);
 

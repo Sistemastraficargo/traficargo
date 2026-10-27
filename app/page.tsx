@@ -652,11 +652,11 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
 <div className="fixed top-20 left-0 w-full bg-black/95 z-40 md:hidden">
   <div className="flex flex-col p-8 gap-8 uppercase items-end text-right pr-10">
   
-  <a href="#inicio">Inicio</a>
-  <a href="#nosotros">Nosotros</a>
-  <a href="#servicios">Servicios</a>
-  <a href="#sucursales">Sucursales</a>
-  <a href="/blog">Blog</a>
+  <a href="#inicio" onClick={() => setMenuOpen(false)}>{t.home}</a>
+  <a href="#nosotros" onClick={() => setMenuOpen(false)}>{t.about}</a>
+  <a href="#servicios" onClick={() => setMenuOpen(false)}>{t.services}</a>
+  <a href="#sucursales" onClick={() => setMenuOpen(false)}>{t.offices}</a>
+  <a href="/blog">{t.blog}</a>
 
   </div>
 </div>
@@ -818,7 +818,7 @@ md:drop-shadow-none
       </h3>
 
       <p className="text-2xl font-bold mb-4">
-        {t.globalClients}
+        {t.clientsTitle}
       </p>
 
       <p className="text-white/60 leading-relaxed">
@@ -844,12 +844,11 @@ md:drop-shadow-none
       </h3>
 
       <p className="text-2xl font-bold mb-4">
-        {t.operationalMonitoring}
+        {t.monitoringTitle}
       </p>
 
       <p className="text-white/60 leading-relaxed">
-        Seguimiento y trazabilidad internacional en
-        tiempo real.
+        {t.monitoringDescription}
       </p>
     </motion.div>
 
@@ -960,7 +959,7 @@ md:drop-shadow-none
     <div className="text-center mb-12">
 
       <p className="uppercase tracking-[0.3em] text-cyan-400 mb-4">
-        {t.strategicNetworks}
+        {t.networksSubtitle}
       </p>
 
       <h2 className="text-4xl md:text-6xl font-black">
@@ -1206,7 +1205,7 @@ viewport={{ once: true }}
             {t.servicesTitle}
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
            {[
   {
     title: t.seaFreight,
@@ -1550,25 +1549,25 @@ ${descripcion}
 
 <input
 name="nombre"
-placeholder="Nombre"
+placeholder={t.name}
 className="bg-black/30 p-4 rounded-xl"
 />
 
 <input
 name="empresa"
-placeholder="Empresa"
+placeholder={t.company}
 className="bg-black/30 p-4 rounded-xl"
 />
 
 <input
 name="correo"
-placeholder="Correo"
+placeholder={t.email}
 className="bg-black/30 p-4 rounded-xl"
 />
 
 <input
 name="telefono"
-placeholder="Teléfono"
+placeholder={t.phone}
 className="bg-black/30 p-4 rounded-xl"
 />
 
@@ -1586,25 +1585,25 @@ className="bg-black/30 p-4 rounded-xl"
 
 <input
 name="origen"
-placeholder="Origen"
+placeholder={t.origin}
 className="bg-black/30 p-4 rounded-xl"
 />
 
 <input
 name="destino"
-placeholder="Destino"
+placeholder={t.destination}
 className="bg-black/30 p-4 rounded-xl"
 />
 
 <input
 name="mercancia"
-placeholder="Tipo de mercancía"
+placeholder={t.merchandise}
 className="bg-black/30 p-4 rounded-xl"
 />
 
 <textarea
 name="descripcion"
-placeholder="Describe tu operación"
+placeholder={t.operationDescription}
 className="
 md:col-span-2
 bg-black/30
@@ -1644,41 +1643,41 @@ Solicitar cotización
       />
 
       <p className="text-white/60">
-        Logística Internacional Premium para empresas globales.
+        {t.footerDescription}
       </p>
     </div>
 
     <div>
       <h3 className="font-bold mb-4">
-        Navegación
+        {t.navigation}
       </h3>
 
       <ul className="space-y-2 text-white/60">
-        <li>Inicio</li>
-        <li>Nosotros</li>
-        <li>Servicios</li>
-        <li>Blog</li>
-        <li>Contacto</li>
+        <li>{t.home}</li>
+        <li>{t.about}</li>
+        <li>{t.services}</li>
+        <li>{t.blog}</li>
+        <li>{t.contact}</li>
       </ul>
     </div>
 
     <div>
       <h3 className="font-bold mb-4">
-        Servicios
+        {t.services}
       </h3>
 
       <ul className="space-y-2 text-white/60">
-        <li>Marítimo</li>
-        <li>Aéreo</li>
-        <li>Terrestre</li>
-        <li>Aduanal</li>
-        <li>Seguro</li>
+        <li>{t.seaFreight}</li>
+        <li>{t.airFreight}</li>
+        <li>{t.landFreight}</li>
+        <li>{t.customs}</li>
+        <li>{t.cargoInsurance}</li>
       </ul>
     </div>
 
     <div>
       <h3 className="font-bold mb-4">
-        Contacto
+        {t.contact}
       </h3>
 
       <ul className="space-y-2 text-white/60">
@@ -1692,14 +1691,14 @@ Solicitar cotización
   href="/aviso-privacidad"
   className="hover:text-cyan-400 transition"
 >
-  Aviso de Privacidad
+  {t.privacy}
 </Link>
 
 <Link
   href="/terminos-condiciones"
   className="hover:text-cyan-400 transition"
 >
-  Términos y Condiciones
+  {t.terms}
 </Link>
 
   </div>
@@ -1747,11 +1746,11 @@ Solicitar cotización
 
         <div>
           <p className="font-bold text-white">
-            Asistente Traficargo
+            {siteLanguage === "en" ? "Traficargo Assistant" : "Asistente Traficargo"}
           </p>
 
           <p className="text-xs text-cyan-300">
-            Asistencia logística
+            {siteLanguage === "en" ? "Logistics Support" : "Asistencia logística"}
           </p>
         </div>
 
@@ -1778,48 +1777,32 @@ Solicitar cotización
     <div className="max-h-[520px] space-y-4 overflow-y-auto p-5">
 
   <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-    Hola, soy el asistente virtual de Traficargo.
-    Puedo ayudarte a cotizar una operación, resolver dudas logísticas
-    o conectarte con nuestro equipo.
+    {siteLanguage === "en"
+      ? "Hello, I’m Traficargo’s virtual assistant. I can help you request a quote, answer logistics questions, or connect you with our team."
+      : "Hola, soy el asistente virtual de Traficargo. Puedo ayudarte a cotizar una operación, resolver dudas logísticas o conectarte con nuestro equipo."}
   </div>
 
   {/* MENÚ PRINCIPAL */}
   {chatStep === "inicio" && (
     <>
       <p className="text-sm font-semibold text-white">
-        ¿Qué necesitas hacer?
+        {siteLanguage === "en" ? "How can we help you?" : "¿Qué necesitas hacer?"}
       </p>
 
       <div className="grid gap-2">
         {[
-          "Cotizar una operación",
-          "Tengo una duda logística",
-          "Necesito ayuda con una operación",
-          "Hablar con un asesor",
+          { label: siteLanguage === "en" ? "Request a quote" : "Cotizar una operación", step: "operacion" },
+          { label: siteLanguage === "en" ? "Ask a logistics question" : "Tengo una duda logística", step: "duda" },
+          { label: siteLanguage === "en" ? "Get help with a shipment" : "Necesito ayuda con una operación", step: "ayuda" },
+          { label: siteLanguage === "en" ? "Speak with an advisor" : "Hablar con un asesor", step: "asesor" },
         ].map((option) => (
           <button
-            key={option}
+            key={option.step}
             type="button"
-            onClick={() => {
-  if (option === "Cotizar una operación") {
-    setChatStep("operacion");
-  }
-
-  if (option === "Tengo una duda logística") {
-    setChatStep("duda");
-  }
-
-  if (option === "Necesito ayuda con una operación") {
-    setChatStep("ayuda");
-  }
-
-  if (option === "Hablar con un asesor") {
-    setChatStep("asesor");
-  }
-}} 
+            onClick={() => setChatStep(option.step)} 
             className="rounded-xl border border-cyan-400/15 bg-cyan-400/[0.06] px-4 py-3 text-left text-sm text-white/90 transition hover:border-cyan-300/40 hover:bg-cyan-400/10"
           >
-            {option}
+            {option.label}
           </button>
         ))}
       </div>
@@ -1830,12 +1813,11 @@ Solicitar cotización
   {chatStep === "duda" && (
     <>
       <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
-        Tengo una duda logística
+        {siteLanguage === "en" ? "I have a logistics question" : "Tengo una duda logística"}
       </div>
 
       <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-        Claro. Escríbeme tu duda sobre importaciones, exportaciones,
-        transporte marítimo, aéreo, terrestre o procesos logísticos.
+        {siteLanguage === "en" ? "Of course. Ask me about imports, exports, ocean freight, air freight, ground transportation, or logistics processes." : "Claro. Escríbeme tu duda sobre importaciones, exportaciones, transporte marítimo, aéreo, terrestre o procesos logísticos."}
       </div>
 
       {aiQuestion && (
@@ -1852,7 +1834,7 @@ Solicitar cotización
 
       {aiLoading && (
         <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-cyan-300/70">
-          Consultando al asistente...
+          {siteLanguage === "en" ? "Checking with the assistant..." : "Consultando al asistente..."}
         </div>
       )}
 
@@ -1874,7 +1856,7 @@ Solicitar cotización
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ message: question }),
+              body: JSON.stringify({ message: question, language: siteLanguage ?? "es" }),
             });
 
             const result = await response.json();
@@ -1905,7 +1887,7 @@ Solicitar cotización
         <input
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
-          placeholder="Escribe tu duda logística..."
+          placeholder={siteLanguage === "en" ? "Type your logistics question..." : "Escribe tu duda logística..."}
           className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
           autoFocus
         />
@@ -1929,7 +1911,7 @@ Solicitar cotización
         }}
         className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
       >
-        Volver al menú
+        {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
       </button>
     </>
   )}
@@ -1937,7 +1919,7 @@ Solicitar cotización
 {chatStep === "ayuda" && (
   <>
     <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
-      Necesito ayuda con una operación
+      {siteLanguage === "en" ? "I need help with a shipment" : "Necesito ayuda con una operación"}
     </div>
 
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
@@ -1969,7 +1951,7 @@ Solicitar cotización
   <input
     value={chatInput}
     onChange={(e) => setChatInput(e.target.value)}
-    placeholder="Referencia de operación..."
+    placeholder={siteLanguage === "en" ? "Shipment reference..." : "Referencia de operación..."}
     className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
     autoFocus
   />
@@ -1978,7 +1960,7 @@ Solicitar cotización
     type="submit"
     className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
   >
-    Enviar
+    {siteLanguage === "en" ? "Send" : "Enviar"}
   </button>
 </form>
     <button
@@ -1986,7 +1968,7 @@ Solicitar cotización
       onClick={() => setChatStep("inicio")}
       className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
     >
-      Volver al menú
+      {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
     </button>
   </>
 )}
@@ -2056,7 +2038,7 @@ Solicitar cotización
         type="submit"
         className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
       >
-        Enviar
+        {siteLanguage === "en" ? "Send" : "Enviar"}
       </button>
     </form>
   </>
@@ -2106,7 +2088,7 @@ Solicitar cotización
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(supportData),
+        body: JSON.stringify({ ...supportData, language: siteLanguage ?? "es" }),
       });
 
       const result = await response.json();
@@ -2134,7 +2116,7 @@ Solicitar cotización
       onClick={() => setChatStep("inicio")}
       className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
     >
-      Volver al menú
+      {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
     </button>
   </>
 )}
@@ -2173,7 +2155,7 @@ Solicitar cotización
       }}
       className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
     >
-      Volver al menú
+      {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
     </button>
   </>
 )}
@@ -2181,7 +2163,7 @@ Solicitar cotización
 {chatStep === "asesor" && (
   <>
     <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
-      Hablar con un asesor
+      {siteLanguage === "en" ? "Speak with an advisor" : "Hablar con un asesor"}
     </div>
 
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
@@ -2225,7 +2207,7 @@ Solicitar cotización
         type="submit"
         className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
       >
-        Enviar
+        {siteLanguage === "en" ? "Send" : "Enviar"}
       </button>
     </form>
 
@@ -2237,7 +2219,7 @@ Solicitar cotización
       }}
       className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
     >
-      Volver al menú
+      {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
     </button>
   </>
 )}
@@ -2302,7 +2284,7 @@ Solicitar cotización
         type="submit"
         className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
       >
-        Enviar
+        {siteLanguage === "en" ? "Send" : "Enviar"}
       </button>
     </form>
   </>
@@ -2348,7 +2330,7 @@ Solicitar cotización
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(supportData),
+            body: JSON.stringify({ ...supportData, language: siteLanguage ?? "es" }),
           });
 
           const result = await response.json();
@@ -2377,7 +2359,7 @@ Solicitar cotización
       onClick={() => setChatStep("inicio")}
       className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
     >
-      Volver al menú
+      {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
     </button>
   </>
 )}
@@ -2417,7 +2399,7 @@ Solicitar cotización
       }}
       className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
     >
-      Volver al menú
+      {siteLanguage === "en" ? "Back to menu" : "Volver al menú"}
     </button>
   </>
 )}
@@ -2425,17 +2407,17 @@ Solicitar cotización
   {chatStep === "operacion" && (
     <>
       <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-md bg-cyan-600 px-4 py-3 text-sm text-white">
-        Quiero cotizar una operación
+        {siteLanguage === "en" ? "I would like to request a quote" : "Quiero cotizar una operación"}
       </div>
 
       <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
-        Perfecto. ¿Se trata de una importación o una exportación?
+        {siteLanguage === "en" ? "Great. Is this an import or an export?" : "Perfecto. ¿Se trata de una importación o una exportación?"}
       </div>
 
       <div className="grid grid-cols-2 gap-2">
         {["Importación", "Exportación"].map((operation) => (
           <button
-            key={operation}
+            key={siteLanguage === "en" ? (operation === "Importación" ? "Import" : "Export") : operation}
             type="button"
             onClick={() => {
               setQuoteData((data) => ({
@@ -2447,7 +2429,7 @@ Solicitar cotización
             }}
             className="rounded-xl border border-cyan-400/15 bg-cyan-400/[0.06] px-4 py-3 text-sm text-white/90 transition hover:bg-cyan-400/10"
           >
-            {operation}
+            {siteLanguage === "en" ? (operation === "Importación" ? "Import" : "Export") : operation}
           </button>
         ))}
       </div>
@@ -2462,7 +2444,7 @@ Solicitar cotización
       </div>
 
       <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
-        ¿Qué tipo de transporte necesitas?
+        {siteLanguage === "en" ? "What type of transportation do you need?" : "¿Qué tipo de transporte necesitas?"}
       </div>
 
       <div className="grid gap-2">
@@ -2473,7 +2455,7 @@ Solicitar cotización
           "No sé cuál necesito",
         ].map((transport) => (
           <button
-            key={transport}
+            key={siteLanguage === "en" ? ({"Marítimo":"Ocean Freight","Aéreo":"Air Freight","Terrestre":"Ground Freight","No sé cuál necesito":"Not sure"} as Record<string,string>)[transport] ?? transport : transport}
             type="button"
             onClick={() => {
               setQuoteData((data) => ({
@@ -2485,7 +2467,7 @@ Solicitar cotización
             }}
             className="rounded-xl border border-cyan-400/15 bg-cyan-400/[0.06] px-4 py-3 text-left text-sm text-white/90 transition hover:bg-cyan-400/10"
           >
-            {transport}
+            {siteLanguage === "en" ? ({"Marítimo":"Ocean Freight","Aéreo":"Air Freight","Terrestre":"Ground Freight","No sé cuál necesito":"Not sure"} as Record<string,string>)[transport] ?? transport : transport}
           </button>
         ))}
       </div>
@@ -2582,7 +2564,7 @@ Solicitar cotización
           type="submit"
           className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
         >
-          Enviar
+          {siteLanguage === "en" ? "Send" : "Enviar"}
         </button>
       </form>
     </>
@@ -2648,7 +2630,7 @@ Solicitar cotización
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(quoteData),
+      body: JSON.stringify({ ...quoteData, language: siteLanguage ?? "es" }),
     });
 
     const result = await response.json();

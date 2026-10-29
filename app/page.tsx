@@ -202,27 +202,34 @@ const translations = {
 
 export default function Home() {
   // TRAFICARGO - Desarrollo bilingüe ES/EN
+
   const [siteLanguage, setSiteLanguage] = useState<SiteLanguage | null>(null);
-const [languageLoaded, setLanguageLoaded] = useState(false);
+  const [languageLoaded, setLanguageLoaded] = useState(false);
 
-useEffect(() => {
-  const savedLanguage = localStorage.getItem("traficargo-language");
+  useEffect(() => {
+    const loadLanguage = () => {
+      const savedLanguage = localStorage.getItem("traficargo-language");
 
-  if (savedLanguage === "es" || savedLanguage === "en") {
-    setSiteLanguage(savedLanguage);
-    document.documentElement.lang = savedLanguage;
-  }
+      if (savedLanguage === "es" || savedLanguage === "en") {
+        setSiteLanguage(savedLanguage);
+        document.documentElement.lang = savedLanguage;
+      }
 
-  setLanguageLoaded(true);
-}, []);
+      setLanguageLoaded(true);
+    };
 
-const chooseLanguage = (language: SiteLanguage) => {
-  localStorage.setItem("traficargo-language", language);
+    const timeout = window.setTimeout(loadLanguage, 0);
 
-  document.documentElement.lang = language;
+    return () => window.clearTimeout(timeout);
+  }, []);
 
-  setSiteLanguage(language);
-};
+  const chooseLanguage = (language: SiteLanguage) => {
+    localStorage.setItem("traficargo-language", language);
+
+    document.documentElement.lang = language;
+
+    setSiteLanguage(language);
+  };
 const t = translations[siteLanguage ?? "es"];
 
   const [scrolled, setScrolled] = useState(false);
@@ -598,9 +605,9 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
     "
   />
 </a>
-<a href="/blog" className="hover:text-cyan-400 transition">
+<Link href="/blog/" className="hover:text-cyan-400 transition">
   {t.blog}
-</a>
+</Link>
 
 </div>
 {/* SELECTOR DE IDIOMA */}
@@ -656,7 +663,9 @@ drop-shadow-[0_0_35px_rgba(34,211,238,0.25)]
   <a href="#nosotros" onClick={() => setMenuOpen(false)}>{t.about}</a>
   <a href="#servicios" onClick={() => setMenuOpen(false)}>{t.services}</a>
   <a href="#sucursales" onClick={() => setMenuOpen(false)}>{t.offices}</a>
-  <a href="/blog">{t.blog}</a>
+  <Link href="/blog/" onClick={() => setMenuOpen(false)}>
+    {t.blog}
+  </Link>
 
   </div>
 </div>

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useSiteLanguage } from "../components/useSiteLanguage";
 export default function TerminosCondiciones() {
   const language = useSiteLanguage();
@@ -18,15 +19,15 @@ export default function TerminosCondiciones() {
 >
   <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <a href="/">
+    <Link href="/">
       <img
         src="/logo.png"
         alt="Traficargo"
         className="h-14"
       />
-    </a>
+    </Link>
 
-    <a
+    <Link
       href="/"
       className="
       px-5
@@ -39,7 +40,7 @@ export default function TerminosCondiciones() {
       "
     >
       {tx("Volver al inicio", "Back to Home")}
-    </a>
+    </Link>
 
   </div>
 </nav>

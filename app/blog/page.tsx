@@ -194,12 +194,12 @@ export default function BlogPage() {
             {tx("Nuestro equipo puede ayudarle a diseñar una solución logística adaptada a su mercancía, origen y destino.", "Our team can help design a logistics solution tailored to your cargo, origin, and destination.")}
           </p>
 
-          <a
-            href="/#cotizar"
-            className="inline-flex bg-cyan-700 hover:bg-cyan-600 transition px-10 py-5 rounded-full font-bold"
-          >
-            {tx("Solicitar cotización", "Request a Quote")}
-          </a>
+         <Link
+  href="/#cotizar"
+  className="inline-flex bg-cyan-700 hover:bg-cyan-600 transition px-10 py-5 rounded-full font-bold"
+>
+  {tx("Solicitar cotización", "Request a Quote")}
+</Link>
 
         </div>
       </section>

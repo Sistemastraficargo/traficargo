@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useSiteLanguage } from "../../components/useSiteLanguage";
 
 export default function ServicioSeguro() {
+  const language = useSiteLanguage();
+  const tx = (es: string, en: string) => language === "en" ? en : es;
   return (
     <main className="bg-black text-white min-h-screen overflow-x-hidden">
 
@@ -21,7 +24,7 @@ export default function ServicioSeguro() {
             href="/"
             className="text-sm uppercase tracking-wider hover:text-cyan-400 transition"
           >
-            Volver al inicio
+            {tx("Volver al inicio", "Back to Home")}
           </Link>
         </div>
       </nav>
@@ -45,18 +48,17 @@ export default function ServicioSeguro() {
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
           <p className="uppercase tracking-[0.4em] text-cyan-400 mb-6">
-            Seguro de carga
+            {tx("Seguro de carga", "Cargo Insurance")}
           </p>
 
           <h1 className="text-5xl md:text-8xl font-black leading-none mb-8">
-            Protección para
+            {tx("Protección para", "Protection for")}
             <br />
-            su mercancía
+            {tx("su mercancía", "Your Cargo")}
           </h1>
 
           <p className="max-w-3xl mx-auto text-white/70 text-lg md:text-xl leading-relaxed">
-            Brindamos soluciones de protección para acompañar su carga durante
-            cada etapa de la operación logística.
+            {tx("Brindamos soluciones de protección para acompañar su carga durante cada etapa de la operación logística.", "We offer cargo protection solutions throughout every stage of your logistics operation.")}
           </p>
 
           <div className="mt-10 flex justify-center gap-4 flex-wrap">
@@ -64,14 +66,14 @@ export default function ServicioSeguro() {
               href="/#cotizar"
               className="bg-cyan-700 hover:bg-cyan-600 transition px-8 py-4 rounded-full font-semibold"
             >
-              Solicitar cotización
+              {tx("Solicitar cotización", "Request a Quote")}
             </a>
 
             <a
               href="/#servicios"
               className="border border-white/20 hover:bg-white/10 transition px-8 py-4 rounded-full"
             >
-              Ver otros servicios
+              {tx("Ver otros servicios", "Explore Other Services")}
             </a>
           </div>
         </div>
@@ -82,30 +84,30 @@ export default function ServicioSeguro() {
         <div className="max-w-7xl mx-auto">
 
           <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-            Modalidades
+            {tx("Modalidades", "Service Options")}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-black mb-16">
-            Protección para cada tipo de operación
+            {tx("Protección para cada tipo de operación", "Protection for Every Type of Shipment")}
           </h2>
 
           <div className="grid md:grid-cols-4 gap-6">
             {[
               {
-                title: "Cobertura internacional",
-                text: "Protección para operaciones globales."
+                title: tx("Cobertura internacional", "International Coverage"),
+                text: tx("Protección para operaciones globales.", "Protection for global shipments.")
               },
               {
-                title: "Marítimo",
-                text: "Cobertura para embarques marítimos."
+                title: tx("Marítimo", "Ocean Freight"),
+                text: tx("Cobertura para embarques marítimos.", "Coverage for ocean shipments.")
               },
               {
-                title: "Aéreo",
-                text: "Protección para cargas urgentes o de alto valor."
+                title: tx("Aéreo", "Air Freight"),
+                text: tx("Protección para cargas urgentes o de alto valor.", "Protection for urgent or high-value cargo.")
               },
               {
-                title: "Terrestre",
-                text: "Cobertura para movimientos nacionales e internacionales."
+                title: tx("Terrestre", "Ground Freight"),
+                text: tx("Cobertura para movimientos nacionales e internacionales.", "Coverage for domestic and international transportation.")
               }
             ].map((item) => (
               <div
@@ -155,21 +157,19 @@ export default function ServicioSeguro() {
 
               <div>
                 <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-                  Protección logística
+                  {tx("Protección logística", "Cargo Protection")}
                 </p>
 
                 <h2 className="text-4xl md:text-6xl font-black mb-8">
-                  Respaldo para cada operación
+                  {tx("Respaldo para cada operación", "Coverage for Every Shipment")}
                 </h2>
 
                 <p className="text-white/70 text-lg leading-relaxed mb-6">
-                  Sabemos que cada embarque representa una inversión importante.
+                  {tx("Sabemos que cada embarque representa una inversión importante.", "We understand that every shipment represents a significant investment.")}
                 </p>
 
                 <p className="text-white/70 text-lg leading-relaxed">
-                  Por ello ofrecemos alternativas de protección para acompañar
-                  su mercancía desde origen hasta destino, brindando tranquilidad
-                  durante todo el trayecto.
+                  {tx("Por ello ofrecemos alternativas de protección para acompañar su mercancía desde origen hasta destino, brindando tranquilidad durante todo el trayecto.", "That is why we offer protection options from origin to destination, giving you peace of mind throughout the journey.")}
                 </p>
               </div>
 
@@ -191,26 +191,26 @@ export default function ServicioSeguro() {
             <div className="max-w-7xl mx-auto">
 
               <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-                Beneficios
+                {tx("Beneficios", "Benefits")}
               </p>
 
               <h2 className="text-4xl md:text-6xl font-black mb-16">
-                ¿Por qué proteger su mercancía?
+                {tx("¿Por qué proteger su mercancía?", "Why Protect Your Cargo?")}
               </h2>
 
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
-                    title: "Mayor tranquilidad",
-                    text: "Respaldo adicional durante el transporte."
+                    title: tx("Mayor tranquilidad", "Greater Peace of Mind"),
+                    text: tx("Respaldo adicional durante el transporte.", "Additional protection during transportation.")
                   },
                   {
-                    title: "Cobertura internacional",
-                    text: "Protección para operaciones globales."
+                    title: tx("Cobertura internacional", "International Coverage"),
+                    text: tx("Protección para operaciones globales.", "Protection for global shipments.")
                   },
                   {
-                    title: "Continuidad operativa",
-                    text: "Reducción del impacto ante imprevistos."
+                    title: tx("Continuidad operativa", "Business Continuity"),
+                    text: tx("Reducción del impacto ante imprevistos.", "Helps reduce the impact of unexpected events.")
                   }
                 ].map((benefit) => (
                   <div
@@ -236,19 +236,19 @@ export default function ServicioSeguro() {
             <div className="max-w-7xl mx-auto">
 
               <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-                Riesgos
+                {tx("Riesgos", "Risks")}
               </p>
 
               <h2 className="text-4xl md:text-6xl font-black mb-16">
-                Protección ante imprevistos logísticos
+                {tx("Protección ante imprevistos logísticos", "Protection Against Unexpected Logistics Risks")}
               </h2>
 
               <div className="grid md:grid-cols-4 gap-6">
                 {[
-                  "Daños durante transporte",
-                  "Manipulación de carga",
-                  "Eventos imprevistos",
-                  "Pérdidas operativas"
+                  tx("Daños durante transporte", "Damage in Transit"),
+                  tx("Manipulación de carga", "Cargo Handling"),
+                  tx("Eventos imprevistos", "Unexpected Events"),
+                  tx("Pérdidas operativas", "Operational Losses")
                 ].map((item) => (
                   <div
                     key={item}
@@ -276,20 +276,20 @@ export default function ServicioSeguro() {
             <div className="max-w-7xl mx-auto p-8 md:p-16 text-center">
 
               <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-                Proceso
+                {tx("Proceso", "Our Process")}
               </p>
 
               <h2 className="text-4xl md:text-6xl font-black mb-16">
-                Así protegemos su mercancía
+                {tx("Así protegemos su mercancía", "How We Protect Your Cargo")}
               </h2>
 
               <div className="grid md:grid-cols-5 gap-6">
                 {[
-                  "Evaluación",
-                  "Cotización",
-                  "Contratación",
-                  "Protección",
-                  "Seguimiento"
+                  tx("Evaluación", "Assessment"),
+                  tx("Cotización", "Quotation"),
+                  tx("Contratación", "Policy Purchase"),
+                  tx("Protección", "Protection"),
+                  tx("Seguimiento", "Follow-Up")
                 ].map((step, index) => (
                   <div
                     key={step}
@@ -330,19 +330,18 @@ export default function ServicioSeguro() {
         <div className="max-w-7xl mx-auto bg-[#04131d] border-cyan-400/10 p-8 md:p-20 text-center">
 
           <h2 className="text-4xl md:text-6xl font-black mb-6">
-            ¿Desea proteger su mercancía?
+            {tx("¿Desea proteger su mercancía?", "Want to Protect Your Cargo?")}
           </h2>
 
           <p className="text-white/60 text-lg mb-10">
-            Nuestro equipo puede ayudarle a encontrar una solución de protección
-            adecuada para su operación logística.
+            {tx("Nuestro equipo puede ayudarle a encontrar una solución de protección adecuada para su operación logística.", "Our team can help you find suitable cargo protection for your logistics operation.")}
           </p>
 
           <a
             href="/#cotizar"
             className="inline-flex bg-cyan-700 hover:bg-cyan-600 transition px-10 py-5 rounded-full font-bold"
           >
-            Solicitar cotización
+            {tx("Solicitar cotización", "Request a Quote")}
           </a>
 
         </div>
@@ -351,16 +350,16 @@ export default function ServicioSeguro() {
       <footer className="relative z-20 bg-[#04132d] border-t border-cyan-400/10 py-12">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6 text-white/50 text-sm">
           <p>
-            © 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.
+            {tx("© 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.", "© 2026 TRAFICARGO INTERNACIONAL. All rights reserved.")}
           </p>
 
           <div className="flex gap-6">
             <Link href="/aviso-privacidad" className="hover:text-cyan-400">
-              Aviso de Privacidad
+              {tx("Aviso de Privacidad", "Privacy Notice")}
             </Link>
 
             <Link href="/terminos-condiciones" className="hover:text-cyan-400">
-              Términos y Condiciones
+              {tx("Términos y Condiciones", "Terms and Conditions")}
             </Link>
           </div>
         </div>

@@ -1106,19 +1106,20 @@ md:drop-shadow-none
         </p>
 
         <a
-          href="/brochure.pdf"
-          target="_blank"
-          className="
-          bg-cyan-600
-          hover:bg-cyan-500
-          px-6
-          py-3
-          rounded-full
-          w-fit
-          "
-        >
-          {t.brochure}
-        </a>
+  href={siteLanguage === "en" ? "/brochure-en.pdf" : "/brochure-es.pdf"}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    bg-cyan-600
+    hover:bg-cyan-500
+    px-6
+    py-3
+    rounded-full
+    w-fit
+  "
+>
+  {t.brochure}
+</a>
 
       </div>
 
@@ -1165,20 +1166,20 @@ md:drop-shadow-none
         </p>
 
         <a
-          href="/brochure.pdf"
-          target="_blank"
-          className="
-          bg-cyan-600
-          hover:bg-cyan-500
-          px-6
-          py-3
-          rounded-full
-          w-fit
-          "
-        >
-          {t.brochure}
-        </a>
-
+  href={siteLanguage === "en" ? "/brochure-en.pdf" : "/brochure-es.pdf"}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="
+    bg-cyan-600
+    hover:bg-cyan-500
+    px-6
+    py-3
+    rounded-full
+    w-fit
+  "
+>
+  {t.brochure}
+</a>
       </div>
 
     </motion.div>
@@ -1498,11 +1499,15 @@ viewport={{ once: true }}
 <div className="max-w-5xl mx-auto px-6">
 
 <h2 className="text-5xl font-black mb-4">
-Solicita una cotización
-</h2> 
+  {siteLanguage === "en"
+    ? "Request a Quote"
+    : "Solicita una cotización"}
+</h2>
 
 <p className="text-white/60 mb-12">
-Un asesor especializado se pondrá en contacto contigo.
+  {siteLanguage === "en"
+    ? "A specialized logistics advisor will contact you."
+    : "Un asesor especializado se pondrá en contacto contigo."}
 </p>
 <form
   onSubmit={(e) => {
@@ -1576,11 +1581,25 @@ name="servicio"
 className="bg-black/30 p-4 rounded-xl"
 >
 
-<option>Marítimo</option>
-<option>Aéreo</option>
-<option>Terrestre</option>
-<option>Aduanal</option>
-<option>Seguro</option>
+<option value="Marítimo">
+  {siteLanguage === "en" ? "Ocean Freight" : "Marítimo"}
+</option>
+
+<option value="Aéreo">
+  {siteLanguage === "en" ? "Air Freight" : "Aéreo"}
+</option>
+
+<option value="Terrestre">
+  {siteLanguage === "en" ? "Ground Freight" : "Terrestre"}
+</option>
+
+<option value="Aduanal">
+  {siteLanguage === "en" ? "Customs Clearance" : "Aduanal"}
+</option>
+
+<option value="Seguro">
+  {siteLanguage === "en" ? "Cargo Insurance" : "Seguro"}
+</option>
 </select>
 
 <input
@@ -1624,7 +1643,9 @@ text-lg
 transition
 "
 >
-Solicitar cotización
+{siteLanguage === "en"
+  ? "Request a Quote"
+  : "Solicitar cotización"}
 </button>
 
 </form>
@@ -1704,7 +1725,7 @@ Solicitar cotización
   </div>
 
   <div className="border-t border-white/10 mt-16 pt-8 text-center text-white/40 text-sm">
-    © 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.
+    © 2026 TRAFICARGO INTERNACIONAL. All rights reserved.
   </div>
 
 </footer>
@@ -1856,7 +1877,10 @@ Solicitar cotización
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ message: question, language: siteLanguage ?? "es" }),
+              body: JSON.stringify({
+  message: aiQuestion,
+  language: siteLanguage,
+}),
             });
 
             const result = await response.json();
@@ -1868,15 +1892,19 @@ Solicitar cotización
             }
 
             setAiAnswer(
-              result.answer ||
-              result.message ||
-              "Respuesta recibida."
-            );
+  result.answer ||
+    result.message ||
+    (siteLanguage === "en"
+      ? "Response received."
+      : "Respuesta recibida.")
+);
           } catch (error) {
             console.error("Error en el asistente:", error);
 
             setAiAnswer(
-              "El asistente inteligente está temporalmente fuera de servicio. Puedes volver al menú para solicitar una cotización o contactar a nuestro equipo."
+              siteLanguage === "en"
+                ? "The intelligent assistant is temporarily unavailable. You can go back to the menu to request a quote or contact our team."
+                : "El asistente inteligente está temporalmente fuera de servicio. Puedes volver al menú para solicitar una cotización o contactar a nuestro equipo."
             );
           } finally {
             setAiLoading(false);
@@ -1897,7 +1925,11 @@ Solicitar cotización
           disabled={aiLoading}
           className="rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          {aiLoading ? "..." : "Enviar"}
+          {aiLoading
+  ? "..."
+  : siteLanguage === "en"
+    ? "Send"
+    : "Enviar"}
         </button>
       </form>
 
@@ -1923,13 +1955,17 @@ Solicitar cotización
     </div>
 
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-      Claro. Si ya tienes una operación con Traficargo, nuestro equipo
-      puede ayudarte con su seguimiento.
+      {siteLanguage === "en"
+        ? "Of course. If you already have an operation with Traficargo, our team can help you track it."
+        : "Claro. Si ya tienes una operación con Traficargo, nuestro equipo puede ayudarte con su seguimiento."}
     </div>
 
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-      Para comenzar, indícame tu número o referencia de operación.
-    </div>
+
+  {siteLanguage === "en"
+    ? "To get started, please enter your shipment or operation reference number."
+    : "Para comenzar, indícame tu número o referencia de operación."}
+</div>
   <form
   onSubmit={(e) => {
     e.preventDefault();
@@ -1978,16 +2014,24 @@ Solicitar cotización
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
 
       {chatStep === "ayudaNombre" &&
-        "Gracias. ¿Cuál es tu nombre?"}
+        (siteLanguage === "en"
+          ? "Thank you. What is your name?"
+          : "Gracias. ¿Cuál es tu nombre?")}
 
       {chatStep === "ayudaEmpresa" &&
-        "¿De qué empresa nos contactas?"}
+        (siteLanguage === "en"
+          ? "What company do you represent?"
+          : "¿De qué empresa nos contactas?")}
 
       {chatStep === "ayudaContacto" &&
-        "Déjanos un teléfono o correo para poder contactarte."}
+        (siteLanguage === "en"
+          ? "Please leave us a phone number or email so we can contact you."
+          : "Déjanos un teléfono o correo para poder contactarte.")}
 
       {chatStep === "ayudaProblema" &&
-        "Cuéntanos brevemente qué sucede con tu operación o qué apoyo necesitas."}
+        (siteLanguage === "en"
+          ? "Tell us briefly what is happening with your operation or what support you need."
+          : "Cuéntanos brevemente qué sucede con tu operación o qué apoyo necesitas.")}
 
     </div>
 
@@ -2029,7 +2073,11 @@ Solicitar cotización
       <input
         value={chatInput}
         onChange={(e) => setChatInput(e.target.value)}
-        placeholder="Escribe aquí..."
+        placeholder={
+          siteLanguage === "en"
+            ? "Type your message here..."
+            : "Escribe aquí..."
+        }
         className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
         autoFocus
       />
@@ -2048,33 +2096,45 @@ Solicitar cotización
 {chatStep === "ayudaResumen" && (
   <>
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
-      Listo, {supportData.name}. Estos son los datos de tu solicitud de apoyo:
-    </div>
+  {siteLanguage === "en"
+    ? `All set, ${supportData.name}. Here is a summary of your support request:`
+    : `Listo, ${supportData.name}. Estos son los datos de tu solicitud de apoyo:`}
+</div>
 
     <div className="space-y-1 rounded-2xl border border-cyan-400/15 bg-cyan-400/[0.05] p-4 text-sm text-white/80">
 
       <p>
-        <span className="text-white/45">Referencia:</span>{" "}
-        {supportData.reference}
-      </p>
+  <span className="text-white/45">
+    {siteLanguage === "en" ? "Reference:" : "Referencia:"}
+  </span>{" "}
+  {supportData.reference}
+</p>
 
       <p>
-        <span className="text-white/45">Nombre:</span>{" "}
+        <span className="text-white/45">
+  {siteLanguage === "en" ? "Name:" : "Nombre:"}
+</span>{" "}
         {supportData.name}
       </p>
 
       <p>
-        <span className="text-white/45">Empresa:</span>{" "}
+        <span className="text-white/45">
+  {siteLanguage === "en" ? "Company:" : "Empresa:"}
+</span>{" "}
         {supportData.company}
       </p>
 
       <p>
-        <span className="text-white/45">Contacto:</span>{" "}
+        <span className="text-white/45">
+  {siteLanguage === "en" ? "Contact:" : "Contacto:"}
+</span>{" "}
         {supportData.contact}
       </p>
 
       <p>
-        <span className="text-white/45">Situación:</span>{" "}
+        <span className="text-white/45">
+  {siteLanguage === "en" ? "Situation:" : "Situación:"}
+</span>{" "}
         {supportData.problem}
       </p>
 
@@ -2109,7 +2169,9 @@ Solicitar cotización
   }}
   className="w-full rounded-xl bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-500"
 >
-  Enviar solicitud de ayuda a Traficargo
+      {siteLanguage === "en"
+  ? "Send Support Request to Traficargo"
+  : "Enviar solicitud de ayuda a Traficargo"}
 </button> 
     <button
       type="button"
@@ -2126,15 +2188,19 @@ Solicitar cotización
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
 
       <p className="font-semibold text-cyan-300">
-        ✓ Solicitud registrada
+        {siteLanguage === "en" ? "✓ Request submitted" : "✓ Solicitud registrada"}
       </p>
 
       <p className="mt-2">
-        Gracias, {supportData.name}. Ya tenemos los datos de tu solicitud de apoyo.
+        {siteLanguage === "en"
+          ? `Thank you, ${supportData.name}. We have your support request details.`
+          : `Gracias, ${supportData.name}. Ya tenemos los datos de tu solicitud de apoyo.`}
       </p>
 
       <p className="mt-2 text-white/60">
-        Un integrante del equipo de Traficargo podrá revisar tu operación y ponerse en contacto contigo.
+        {siteLanguage === "en"
+          ? "A Traficargo team member will review your operation and contact you."
+          : "Un integrante del equipo de Traficargo podrá revisar tu operación y ponerse en contacto contigo."}
       </p>
 
     </div>
@@ -2167,12 +2233,16 @@ Solicitar cotización
     </div>
 
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-      Claro. Podemos pedirle a un asesor de Traficargo que se ponga en contacto contigo.
-    </div>
+  {siteLanguage === "en"
+    ? "Of course. We can arrange for a Traficargo advisor to contact you."
+    : "Claro. Podemos pedirle a un asesor de Traficargo que se ponga en contacto contigo."}
+</div>
 
-    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-      Para comenzar, ¿cuál es tu nombre?
-    </div>
+<div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
+  {siteLanguage === "en"
+    ? "To get started, what is your name?"
+    : "Para comenzar, ¿cuál es tu nombre?"}
+</div>
 
     <form
       onSubmit={(e) => {
@@ -2198,7 +2268,11 @@ Solicitar cotización
       <input
         value={chatInput}
         onChange={(e) => setChatInput(e.target.value)}
-        placeholder="Tu nombre..."
+        placeholder={
+  siteLanguage === "en"
+    ? "Your name..."
+    : "Tu nombre..."
+}
         className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
         autoFocus
       />
@@ -2228,14 +2302,20 @@ Solicitar cotización
   <>
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
 
-      {chatStep === "asesorEmpresa" &&
-        "Gracias. ¿De qué empresa nos contactas?"}
+     {chatStep === "asesorEmpresa" &&
+  (siteLanguage === "en"
+    ? "Thank you. Which company are you contacting us from?"
+    : "Gracias. ¿De qué empresa nos contactas?")}
 
-      {chatStep === "asesorContacto" &&
-        "¿A qué teléfono o correo puede contactarte nuestro asesor?"}
+{chatStep === "asesorContacto" &&
+  (siteLanguage === "en"
+    ? "What phone number or email address can our advisor use to contact you?"
+    : "¿A qué teléfono o correo puede contactarte nuestro asesor?")}
 
-      {chatStep === "asesorMotivo" &&
-        "Por último, cuéntanos brevemente en qué podemos ayudarte."}
+{chatStep === "asesorMotivo" &&
+  (siteLanguage === "en"
+    ? "Finally, please briefly tell us how we can help you."
+    : "Por último, cuéntanos brevemente en qué podemos ayudarte.")}
 
     </div>
 
@@ -2275,7 +2355,11 @@ Solicitar cotización
       <input
         value={chatInput}
         onChange={(e) => setChatInput(e.target.value)}
-        placeholder="Escribe aquí..."
+        placeholder={
+  siteLanguage === "en"
+    ? "Write here..."
+    : "Escribe aquí..."
+}
         className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
         autoFocus
       />
@@ -2293,9 +2377,11 @@ Solicitar cotización
 {/* RESUMEN PARA ASESOR */}
 {chatStep === "asesorResumen" && (
   <>
-    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
-      Listo, {supportData.name}. Confirma tus datos antes de solicitar contacto con un asesor:
-    </div>
+  <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
+  {siteLanguage === "en"
+    ? `All set, ${supportData.name}. Please confirm your information before requesting contact with an advisor:`
+    : `Listo, ${supportData.name}. Confirma tus datos antes de solicitar contacto con un asesor:`}
+</div>
 
     <div className="space-y-1 rounded-2xl border border-cyan-400/15 bg-cyan-400/[0.05] p-4 text-sm text-white/80">
 
@@ -2351,7 +2437,7 @@ Solicitar cotización
       }}
       className="w-full rounded-xl bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-500"
     >
-      Solicitar contacto con un asesor
+      {siteLanguage === "en" ? "Request contact with an advisor" : "Solicitar contacto con un asesor"}
     </button>
 
     <button
@@ -2370,17 +2456,22 @@ Solicitar cotización
     <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
 
       <p className="font-semibold text-cyan-300">
-        ✓ Solicitud registrada
-      </p>
+  {siteLanguage === "en"
+    ? "✓ Request Submitted"
+    : "✓ Solicitud registrada"}
+</p>
 
-      <p className="mt-2">
-        Gracias, {supportData.name}. Ya tenemos tus datos para solicitar contacto con un asesor.
-      </p>
+<p className="mt-2">
+  {siteLanguage === "en"
+    ? `Thank you, ${supportData.name}. We have received your request to speak with an advisor.`
+    : `Gracias, ${supportData.name}. Ya tenemos tus datos para solicitar contacto con un asesor.`}
+</p>
 
-      <p className="mt-2 text-white/60">
-        Un asesor de Traficargo podrá revisar tu solicitud y ponerse en contacto contigo.
-      </p>
-
+<p className="mt-2 text-white/60">
+  {siteLanguage === "en"
+    ? "A Traficargo advisor will be able to review your request and contact you."
+    : "Un asesor de Traficargo podrá revisar tu solicitud y ponerse en contacto contigo."}
+</p>
     </div>
 
     <button
@@ -2488,25 +2579,39 @@ Solicitar cotización
       <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
 
         {chatStep === "origen" &&
-          "¿Desde qué ciudad, puerto o aeropuerto sale tu mercancía?"}
+  (siteLanguage === "en"
+    ? "Which city, port, or airport is your shipment departing from?"
+    : "¿Desde qué ciudad, puerto o aeropuerto sale tu mercancía?")}
 
         {chatStep === "destino" &&
-          "¿A qué ciudad, puerto o aeropuerto debe llegar?"}
+          (siteLanguage === "en"
+            ? "To which city, port, or airport should it be delivered?"
+            : "¿A qué ciudad, puerto o aeropuerto debe llegar?")}
 
         {chatStep === "mercancia" &&
-          "¿Qué tipo de mercancía necesitas transportar?"}
+          (siteLanguage === "en"
+            ? "What type of cargo do you need to transport?"
+            : "¿Qué tipo de mercancía necesitas transportar?")}
 
         {chatStep === "peso" &&
-          "¿Conoces el peso, volumen o dimensiones aproximadas? Si no lo sabes, escribe “No lo sé”."}
+          (siteLanguage === "en"
+            ? "Do you know the weight, volume, or approximate dimensions? If not, write “I don’t know”."
+            : "¿Conoces el peso, volumen o dimensiones aproximadas? Si no lo sabes, escribe “No lo sé”.")}
 
         {chatStep === "nombre" &&
-          "Muy bien. ¿Cuál es tu nombre?"}
+          (siteLanguage === "en"
+            ? "Great. What is your name?"
+            : "Muy bien. ¿Cuál es tu nombre?")}
 
         {chatStep === "empresa" &&
-          "¿De qué empresa nos contactas?"}
+          (siteLanguage === "en"
+            ? "From which company are you contacting us?"
+            : "¿De qué empresa nos contactas?")}
 
         {chatStep === "contacto" &&
-          "Por último, déjanos un teléfono o correo para que un asesor pueda contactarte."}
+          (siteLanguage === "en"
+            ? "Finally, please provide a phone number or email address so an advisor can reach out to you."
+            : "Por último, déjanos un teléfono o correo para que un asesor pueda contactarte.")}
 
       </div>
 
@@ -2555,7 +2660,11 @@ Solicitar cotización
         <input
           value={chatInput}
           onChange={(e) => setChatInput(e.target.value)}
-          placeholder="Escribe aquí..."
+          placeholder={
+  siteLanguage === "en"
+    ? "Type here..."
+    : "Escribe aquí..."
+}
           className="min-w-0 flex-1 rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 focus:border-cyan-400/50"
           autoFocus
         />
@@ -2574,48 +2683,66 @@ Solicitar cotización
   {chatStep === "resumen" && (
     <>
       <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm text-white/80">
-        Listo, {quoteData.name}. Ya tengo los datos principales de tu solicitud:
-      </div>
+  {siteLanguage === "en"
+    ? `All set, ${quoteData.name}. Here is a summary of your quotation request:`
+    : `Listo, ${quoteData.name}. Ya tengo los datos principales de tu solicitud:`}
+</div>
 
       <div className="space-y-1 rounded-2xl border border-cyan-400/15 bg-cyan-400/[0.05] p-4 text-sm text-white/80">
 
         <p>
-          <span className="text-white/45">Operación:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Operation:" : "Operación:"}
+          </span>{" "}
           {quoteData.operation}
         </p>
 
         <p>
-          <span className="text-white/45">Transporte:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Transport:" : "Transporte:"}
+          </span>{" "}
           {quoteData.transport}
         </p>
 
         <p>
-          <span className="text-white/45">Origen:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Origin:" : "Origen:"}
+          </span>{" "}
           {quoteData.origin}
         </p>
 
         <p>
-          <span className="text-white/45">Destino:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Destination:" : "Destino:"}
+          </span>{" "}
           {quoteData.destination}
         </p>
 
         <p>
-          <span className="text-white/45">Mercancía:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Merchandise:" : "Mercancía:"}
+          </span>{" "}
           {quoteData.merchandise}
         </p>
 
         <p>
-          <span className="text-white/45">Peso / volumen:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Weight / Volume:" : "Peso / volumen:"}
+          </span>{" "}
           {quoteData.weight}
         </p>
 
         <p>
-          <span className="text-white/45">Empresa:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Company:" : "Empresa:"}
+          </span>{" "}
           {quoteData.company}
         </p>
 
         <p>
-          <span className="text-white/45">Contacto:</span>{" "}
+          <span className="text-white/45">
+            {siteLanguage === "en" ? "Contact:" : "Contacto:"}
+          </span>{" "}
           {quoteData.contact}
         </p>
 
@@ -2624,6 +2751,20 @@ Solicitar cotización
       <button
         type="button"
         onClick={async () => {
+          if (
+  !supportData.reference.trim() ||
+  !supportData.name.trim() ||
+  !supportData.company.trim() ||
+  !supportData.contact.trim() ||
+  !supportData.problem.trim()
+) {
+  alert(
+    siteLanguage === "en"
+      ? "Please complete all the required information before submitting your request."
+      : "Completa toda la información requerida antes de enviar tu solicitud."
+  );
+  return;
+}
   try {
     const response = await fetch("/api/cotizaciones", {
       method: "POST",
@@ -2637,7 +2778,9 @@ Solicitar cotización
 
     if (!response.ok) {
       throw new Error(
-        result.message || "No se pudo enviar la solicitud."
+        siteLanguage === "en"
+          ? result.message || "We couldn't submit your request right now. Please try again."
+          : result.message || "No se pudo enviar la solicitud."
       );
     }
 
@@ -2645,13 +2788,17 @@ Solicitar cotización
   } catch (error) {
     console.error("Error al enviar la cotización:", error);
     alert(
-      "No pudimos enviar tu solicitud. Intenta nuevamente."
+      siteLanguage === "en"
+  ? "We couldn't submit your request right now. Please try again."
+  : "No pudimos enviar tu solicitud en este momento. Inténtalo nuevamente."
     );
   }
 }}
         className="w-full rounded-xl bg-cyan-600 px-4 py-3 font-semibold text-white transition hover:bg-cyan-500"
       >
-        Enviar solicitud a Traficargo
+        {siteLanguage === "en"
+  ? "Submit Request to Traficargo"
+  : "Enviar solicitud a Traficargo"}
       </button>
 
       <button
@@ -2673,52 +2820,63 @@ Solicitar cotización
         }}
         className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
       >
-        Iniciar otra consulta
+        {siteLanguage === "en"
+  ? "Back to menu"
+  : "Volver al menú"}
       </button>
         </>
   )}
 
   {/* SOLICITUD ENVIADA */}
   {chatStep === "enviado" && (
-    <>
-      <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
-        <p className="font-semibold text-cyan-300">
-          ✓ Solicitud recibida
-        </p>
+  <>
+    <div className="max-w-[90%] rounded-2xl rounded-tl-md bg-white/[0.06] p-4 text-sm leading-relaxed text-white/80">
 
-        <p className="mt-2">
-          Gracias, {quoteData.name}. Tu solicitud de cotización fue
-          recibida correctamente por Traficargo.
-        </p>
+      <p className="font-semibold text-cyan-300">
+        {siteLanguage === "en"
+          ? "✓ Request Received"
+          : "✓ Solicitud recibida"}
+      </p>
 
-        <p className="mt-2 text-white/60">
-          Un asesor revisará la información y se pondrá en contacto contigo.
-        </p>
-      </div>
+      <p className="mt-2">
+        {siteLanguage === "en"
+          ? `Thank you, ${quoteData.name}. Your quotation request has been successfully received by Traficargo.`
+          : `Gracias, ${quoteData.name}. Tu solicitud de cotización fue recibida correctamente por Traficargo.`}
+      </p>
 
-      <button
-        type="button"
-        onClick={() => {
-          setChatStep("inicio");
+      <p className="mt-2 text-white/60">
+        {siteLanguage === "en"
+          ? "A logistics advisor will review your information and contact you shortly."
+          : "Un asesor revisará la información y se pondrá en contacto contigo."}
+      </p>
 
-          setQuoteData({
-            operation: "",
-            transport: "",
-            origin: "",
-            destination: "",
-            merchandise: "",
-            weight: "",
-            name: "",
-            company: "",
-            contact: "",
-          });
-        }}
-        className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 transition hover:bg-white/5 hover:text-white"
-      >
-        Iniciar otra consulta
-      </button>
-    </>
-  )}
+    </div>
+
+    <button
+      type="button"
+      onClick={() => {
+        setChatStep("inicio");
+
+        setQuoteData({
+          operation: "",
+          transport: "",
+          origin: "",
+          destination: "",
+          merchandise: "",
+          weight: "",
+          name: "",
+          company: "",
+          contact: "",
+        });
+      }}
+      className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm text-white/60 transition hover:bg-white/5 hover:text-white"
+    >
+      {siteLanguage === "en"
+        ? "Start Another Request"
+        : "Iniciar otra consulta"}
+    </button>
+  </>
+)}
 
 </div>
 

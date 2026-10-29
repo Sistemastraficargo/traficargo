@@ -1,6 +1,8 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages */
 
 import Link from "next/link";
+import { useSiteLanguage } from "../../components/useSiteLanguage";
 import { useRef } from "react";
 import {
   motion,
@@ -10,6 +12,8 @@ import {
 } from "framer-motion";
 
 export default function ServicioMaritimo() {
+  const language = useSiteLanguage();
+  const tx = (es: string, en: string) => language === "en" ? en : es;
   const { scrollY } = useScroll();
 
   const shipControls = useAnimationControls();
@@ -91,7 +95,7 @@ export default function ServicioMaritimo() {
             href="/"
             className="text-sm uppercase tracking-wider hover:text-cyan-400 transition"
           >
-            Volver al inicio
+            {tx("Volver al inicio", "Back to Home")}
           </Link>
         </div>
       </nav>
@@ -119,18 +123,15 @@ export default function ServicioMaritimo() {
         <div className="relative z-10 max-w-5xl mx-auto text-center">
 
           <p className="uppercase tracking-[0.4em] text-cyan-400 mb-6">
-            Servicio marítimo
+            {tx("Servicio marítimo", "Ocean Freight Service")}
           </p>
 
           <h1 className="text-5xl md:text-8xl font-black leading-none mb-8">
-            Transporte Marítimo Internacional
+            {tx("Transporte Marítimo Internacional", "International Ocean Freight")}
           </h1>
 
           <p className="max-w-3xl mx-auto text-white/70 text-lg md:text-xl leading-relaxed">
-            Movemos sus cargas en condiciones LCL y FCL desde cualquier origen
-            y hacia cualquier destino, respaldados por una red de agentes
-            internacionales y alianzas estratégicas con los principales
-            transportistas.
+            {tx("Movemos sus cargas en condiciones LCL y FCL desde cualquier origen y hacia cualquier destino, respaldados por una red de agentes internacionales y alianzas estratégicas con los principales transportistas.", "We move LCL and FCL shipments between global origins and destinations, supported by international agents and strategic carrier partnerships.")}
           </p>
 
           <div className="mt-10 flex justify-center gap-4 flex-wrap">
@@ -138,14 +139,14 @@ export default function ServicioMaritimo() {
               href="/#cotizar"
               className="bg-cyan-700 hover:bg-cyan-600 transition px-8 py-4 rounded-full font-semibold"
             >
-              Solicitar cotización
+              {tx("Solicitar cotización", "Request a Quote")}
             </a>
 
             <a
               href="/#servicios"
               className="border border-white/20 hover:bg-white/10 transition px-8 py-4 rounded-full"
             >
-              Ver otros servicios
+              {tx("Ver otros servicios", "Explore Other Services")}
             </a>
           </div>
 
@@ -158,11 +159,11 @@ export default function ServicioMaritimo() {
         <div className="max-w-7xl mx-auto">
 
           <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-            Modalidades
+            {tx("Modalidades", "Service Options")}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-black mb-16">
-            Soluciones marítimas para cada operación
+            {tx("Soluciones marítimas para cada operación", "Ocean Freight Solutions for Every Shipment")}
           </h2>
 
           <div className="grid md:grid-cols-4 gap-6">
@@ -170,19 +171,19 @@ export default function ServicioMaritimo() {
             {[
               {
                 title: "LCL",
-                text: "Carga consolidada ideal para embarques de menor volumen."
+                text: tx("Carga consolidada ideal para embarques de menor volumen.", "Consolidated cargo ideal for smaller shipments.")
               },
               {
                 title: "FCL",
-                text: "Contenedor completo exclusivo para su mercancía."
+                text: tx("Contenedor completo exclusivo para su mercancía.", "A full container dedicated exclusively to your cargo.")
               },
               {
-                title: "Importación",
-                text: "Gestión integral desde cualquier origen internacional."
+                title: tx("Importación", "Imports"),
+                text: tx("Gestión integral desde cualquier origen internacional.", "End-to-end coordination from international origins.")
               },
               {
-                title: "Exportación",
-                text: "Soluciones marítimas para mercados globales."
+                title: tx("Exportación", "Exports"),
+                text: tx("Soluciones marítimas para mercados globales.", "Ocean freight solutions for global markets.")
               }
             ].map((item) => (
               <div
@@ -234,22 +235,19 @@ export default function ServicioMaritimo() {
 
           <div>
             <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-              Cobertura global
+              {tx("Cobertura global", "Global Coverage")}
             </p>
 
             <h2 className="text-4xl md:text-6xl font-black mb-8">
-              Desde cualquier origen hacia cualquier destino
+              {tx("Desde cualquier origen hacia cualquier destino", "From Any Origin to Any Destination")}
             </h2>
 
             <p className="text-white/70 text-lg leading-relaxed mb-6">
-              Independientemente del Incoterm que se tenga, contamos con una red
-              de agentes internacionales que nos respaldan con un servicio de
-              calidad.
+              {tx("Independientemente del Incoterm que se tenga, contamos con una red de agentes internacionales que nos respaldan con un servicio de calidad.", "Regardless of the Incoterm, our international agent network supports reliable, high-quality service.")}
             </p>
 
             <p className="text-white/70 text-lg leading-relaxed">
-              Nuestra operación marítima está diseñada para brindar seguridad,
-              coordinación y visibilidad durante todo el proceso logístico.
+              {tx("Nuestra operación marítima está diseñada para brindar seguridad, coordinación y visibilidad durante todo el proceso logístico.", "Our ocean freight service provides security, coordination, and visibility throughout the logistics process.")}
             </p>
           </div>
 
@@ -271,27 +269,27 @@ export default function ServicioMaritimo() {
         <div className="max-w-7xl mx-auto">
 
           <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-            Beneficios
+            {tx("Beneficios", "Benefits")}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-black mb-16">
-            ¿Por qué elegir nuestro servicio marítimo?
+            {tx("¿Por qué elegir nuestro servicio marítimo?", "Why Choose Our Ocean Freight Service?")}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
 
             {[
               {
-                title: "Red internacional",
-                text: "Agentes estratégicos en puntos clave para coordinar operaciones globales."
+                title: tx("Red internacional", "International Network"),
+                text: tx("Agentes estratégicos en puntos clave para coordinar operaciones globales.", "Strategic agents at key locations to coordinate global shipments.")
               },
               {
-                title: "Flexibilidad operativa",
-                text: "Soluciones adaptadas a diferentes Incoterms, volúmenes y necesidades de carga."
+                title: tx("Flexibilidad operativa", "Operational Flexibility"),
+                text: tx("Soluciones adaptadas a diferentes Incoterms, volúmenes y necesidades de carga.", "Solutions tailored to Incoterms, cargo volumes, and shipping requirements.")
               },
               {
-                title: "Visibilidad de carga",
-                text: "Seguimiento y comunicación constante durante el proceso logístico."
+                title: tx("Visibilidad de carga", "Cargo Visibility"),
+                text: tx("Seguimiento y comunicación constante durante el proceso logístico.", "Continuous tracking and communication throughout the logistics process.")
               }
             ].map((benefit) => (
               <div
@@ -318,20 +316,20 @@ export default function ServicioMaritimo() {
   <div className="max-w-7xl mx-auto p-8 md:p-16 text-center">
 
     <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-      Proceso
+      {tx("Proceso", "Our Process")}
     </p>
 
     <h2 className="text-4xl md:text-6xl font-black mb-16">
-      Así movemos su carga
+      {tx("Así movemos su carga", "How We Move Your Cargo")}
     </h2>
 
     <div className="grid md:grid-cols-5 gap-6">
       {[
-        "Solicitud",
-        "Planeación",
-        "Coordinación",
-        "Transporte",
-        "Entrega"
+        tx("Solicitud", "Request"),
+        tx("Planeación", "Planning"),
+        tx("Coordinación", "Coordination"),
+        tx("Transporte", "Transportation"),
+        tx("Entrega", "Delivery")
       ].map((step, index) => (
         <div
           key={step}
@@ -358,19 +356,18 @@ export default function ServicioMaritimo() {
   <div className="max-w-7xl mx-auto bg-[#04131d] border-cyan-400/10 p-8 md:p-20 text-center">
 
     <h2 className="text-4xl md:text-6xl font-black mb-6">
-      ¿Listo para mover su carga marítima?
+      {tx("¿Listo para mover su carga marítima?", "Ready to Ship by Sea?")}
     </h2>
 
     <p className="text-white/60 text-lg mb-10">
-      Nuestros especialistas están preparados para diseñar una solución
-      marítima adaptada a su operación.
+      {tx("Nuestros especialistas están preparados para diseñar una solución marítima adaptada a su operación.", "Our specialists can design an ocean freight solution tailored to your operation.")}
     </p>
 
     <a
       href="/#cotizar"
       className="inline-flex bg-cyan-700 hover:bg-cyan-600 transition px-10 py-5 rounded-full font-bold"
     >
-      Solicitar cotización
+      {tx("Solicitar cotización", "Request a Quote")}
     </a>
 
   </div>
@@ -381,16 +378,16 @@ export default function ServicioMaritimo() {
   <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6 text-white/50 text-sm">
 
     <p>
-      © 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.
+      {tx("© 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.", "© 2026 TRAFICARGO INTERNACIONAL. All rights reserved.")}
     </p>
 
     <div className="flex gap-6">
       <Link href="/aviso-privacidad" className="hover:text-cyan-400">
-        Aviso de Privacidad
+        {tx("Aviso de Privacidad", "Privacy Notice")}
       </Link>
 
       <Link href="/terminos-condiciones" className="hover:text-cyan-400">
-        Términos y Condiciones
+        {tx("Términos y Condiciones", "Terms and Conditions")}
       </Link>
     </div>
 

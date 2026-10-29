@@ -1,6 +1,8 @@
 "use client";
+/* eslint-disable @next/next/no-html-link-for-pages */
 
 import Link from "next/link";
+import { useSiteLanguage } from "../../components/useSiteLanguage";
 import { useRef } from "react";
 import {
   motion,
@@ -10,6 +12,8 @@ import {
 } from "framer-motion";
 
 export default function ServicioAereo() {
+  const language = useSiteLanguage();
+  const tx = (es: string, en: string) => language === "en" ? en : es;
   const { scrollY } = useScroll();
 
   const shipControls = useAnimationControls();
@@ -91,7 +95,7 @@ export default function ServicioAereo() {
             href="/"
             className="text-sm uppercase tracking-wider hover:text-cyan-400 transition"
           >
-            Volver al inicio
+            {tx("Volver al inicio", "Back to Home")}
           </Link>
         </div>
       </nav>
@@ -117,18 +121,17 @@ export default function ServicioAereo() {
   <div className="relative z-10 max-w-5xl mx-auto text-center">
 
     <p className="uppercase tracking-[0.4em] text-cyan-400 mb-6">
-      Servicio aéreo
+      {tx("Servicio aéreo", "Air Freight Service")}
     </p>
 
     <h1 className="text-5xl md:text-8xl font-black leading-none mb-8">
-      Transporte Aéreo
+      {tx("Transporte Aéreo", "Air Freight")}
       <br />
-      Sin límites de tiempo
+      {tx("Sin límites de tiempo", "Time-Sensitive Logistics")}
     </h1>
 
     <p className="max-w-3xl mx-auto text-white/70 text-lg md:text-xl leading-relaxed">
-      Los mejores tiempos de tránsito para importación y exportación,
-      respaldados por una red global de agentes y aerolíneas estratégicas.
+      {tx("Los mejores tiempos de tránsito para importación y exportación, respaldados por una red global de agentes y aerolíneas estratégicas.", "Competitive transit times for imports and exports, supported by a global network of agents and strategic airline partners.")}
     </p>
 
     <div className="mt-10 flex justify-center gap-4 flex-wrap">
@@ -136,14 +139,14 @@ export default function ServicioAereo() {
         href="/#cotizar"
         className="bg-cyan-700 hover:bg-cyan-600 transition px-8 py-4 rounded-full font-semibold"
       >
-        Solicitar cotización
+        {tx("Solicitar cotización", "Request a Quote")}
       </a>
 
       <a
         href="/#servicios"
         className="border border-white/20 hover:bg-white/10 transition px-8 py-4 rounded-full"
       >
-        Ver otros servicios
+        {tx("Ver otros servicios", "Explore Other Services")}
       </a>
     </div>
 
@@ -155,31 +158,31 @@ export default function ServicioAereo() {
         <div className="max-w-7xl mx-auto">
 
           <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-            Modalidades
+            {tx("Modalidades", "Service Options")}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-black mb-16">
-            Soluciones aéreas para cada operación
+            {tx("Soluciones aéreas para cada operación", "Air Freight Solutions for Every Shipment")}
           </h2>
 
           <div className="grid md:grid-cols-4 gap-6">
 
             {[
   {
-    title: "Importación",
-    text: "Recepción y coordinación desde cualquier aeropuerto internacional."
+    title: tx("Importación", "Imports"),
+    text: tx("Recepción y coordinación desde cualquier aeropuerto internacional.", "Receiving and coordination from international airports worldwide.")
   },
   {
-    title: "Exportación",
-    text: "Operaciones rápidas para mercados globales."
+    title: tx("Exportación", "Exports"),
+    text: tx("Operaciones rápidas para mercados globales.", "Fast shipping solutions for global markets.")
   },
   {
-    title: "Carga Urgente",
-    text: "Embarques prioritarios con tiempos reducidos."
+    title: tx("Carga Urgente", "Urgent Cargo"),
+    text: tx("Embarques prioritarios con tiempos reducidos.", "Priority shipments with shorter transit times.")
   },
   {
-    title: "Carga Especial",
-    text: "Mercancías sensibles y de manejo especializado."
+    title: tx("Carga Especial", "Special Cargo"),
+    text: tx("Mercancías sensibles y de manejo especializado.", "Sensitive cargo requiring specialized handling.")
   }
 ].map((item) => (
               <div
@@ -231,23 +234,19 @@ export default function ServicioAereo() {
 
           <div>
             <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-              Cobertura global
+              {tx("Cobertura global", "Global Coverage")}
             </p>
 
             <h2 className="text-4xl md:text-6xl font-black mb-8">
-              Desde cualquier origen hacia cualquier destino
+              {tx("Desde cualquier origen hacia cualquier destino", "From Any Origin to Any Destination")}
             </h2>
 
             <p className="text-white/70 text-lg leading-relaxed mb-6">
-              Nuestra red internacional permite coordinar
-operaciones aéreas en América, Europa y Asia,
-garantizando tiempos competitivos y seguimiento
-constante.
+              {tx("Nuestra red internacional permite coordinar operaciones aéreas en América, Europa y Asia, garantizando tiempos competitivos y seguimiento constante.", "Our international network coordinates air freight across the Americas, Europe, and Asia, with competitive transit times and continuous tracking.")}
             </p>
 
             <p className="text-white/70 text-lg leading-relaxed">
-              Nuestra operación aérea está diseñada para brindar seguridad,
-              coordinación y visibilidad durante todo el proceso logístico.
+              {tx("Nuestra operación aérea está diseñada para brindar seguridad, coordinación y visibilidad durante todo el proceso logístico.", "Our air freight services are designed to provide security, coordination, and visibility throughout the logistics process.")}
             </p>
           </div>
 
@@ -269,27 +268,27 @@ constante.
         <div className="max-w-7xl mx-auto">
 
           <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-            Beneficios
+            {tx("Beneficios", "Benefits")}
           </p>
 
           <h2 className="text-4xl md:text-6xl font-black mb-16">
-            ¿Por qué elegir nuestro servicio aéreo?
+            {tx("¿Por qué elegir nuestro servicio aéreo?", "Why Choose Our Air Freight Service?")}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
 
             {[
   {
-    title: "Menores tiempos",
-    text: "Operaciones prioritarias para cargas urgentes."
+    title: tx("Menores tiempos", "Faster Transit"),
+    text: tx("Operaciones prioritarias para cargas urgentes.", "Priority handling for urgent shipments.")
   },
   {
-    title: "Cobertura global",
-    text: "Conexión con los principales aeropuertos internacionales."
+    title: tx("Cobertura global", "Global Coverage"),
+    text: tx("Conexión con los principales aeropuertos internacionales.", "Connections to major international airports.")
   },
   {
-    title: "Monitoreo constante",
-    text: "Seguimiento en tiempo real."
+    title: tx("Monitoreo constante", "Continuous Monitoring"),
+    text: tx("Seguimiento en tiempo real.", "Real-time tracking.")
   }
 ].map((benefit) => (
               <div
@@ -316,20 +315,20 @@ constante.
   <div className="max-w-7xl mx-auto  p-8 md:p-16 text-center">
 
     <p className="text-cyan-400 uppercase tracking-[0.3em] mb-4">
-      Proceso
+      {tx("Proceso", "Our Process")}
     </p>
 
     <h2 className="text-4xl md:text-6xl font-black mb-16">
-      Así movemos su carga
+      {tx("Así movemos su carga", "How We Move Your Cargo")}
     </h2>
 
     <div className="grid md:grid-cols-5 gap-6">
       {[
-        "Solicitud",
-        "Planeación",
-        "Coordinación",
-        "Transporte",
-        "Entrega"
+        tx("Solicitud", "Request"),
+        tx("Planeación", "Planning"),
+        tx("Coordinación", "Coordination"),
+        tx("Transporte", "Transportation"),
+        tx("Entrega", "Delivery")
       ].map((step, index) => (
         <div
           key={step}
@@ -356,19 +355,18 @@ constante.
   <div className="max-w-7xl mx-auto bg-[#04131d] border-cyan-400/10 p-8 md:p-20 text-center">
 
     <h2 className="text-4xl md:text-6xl font-black mb-6">
-      ¿Listo para mover su carga aérea?
+      {tx("¿Listo para mover su carga aérea?", "Ready to Ship by Air?")}
     </h2>
 
     <p className="text-white/60 text-lg mb-10">
-      Nuestros especialistas están preparados para diseñar una solución
-      aerea adaptada a su operación.
+      {tx("Nuestros especialistas están preparados para diseñar una solución aerea adaptada a su operación.", "Our specialists can design an air freight solution tailored to your needs.")}
     </p>
 
     <a
       href="/#cotizar"
       className="inline-flex bg-cyan-700 hover:bg-cyan-600 transition px-10 py-5 rounded-full font-bold"
     >
-      Solicitar cotización
+      {tx("Solicitar cotización", "Request a Quote")}
     </a>
 
   </div>
@@ -379,16 +377,16 @@ constante.
   <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6 text-white/50 text-sm">
 
     <p>
-      © 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.
+      {tx("© 2026 TRAFICARGO INTERNACIONAL. Todos los derechos reservados.", "© 2026 TRAFICARGO INTERNACIONAL. All rights reserved.")}
     </p>
 
     <div className="flex gap-6">
       <Link href="/aviso-privacidad" className="hover:text-cyan-400">
-        Aviso de Privacidad
+        {tx("Aviso de Privacidad", "Privacy Notice")}
       </Link>
 
       <Link href="/terminos-condiciones" className="hover:text-cyan-400">
-        Términos y Condiciones
+        {tx("Términos y Condiciones", "Terms and Conditions")}
       </Link>
     </div>
 

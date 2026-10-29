@@ -1,4 +1,9 @@
+"use client";
+import Link from "next/link";
+import { useSiteLanguage } from "../components/useSiteLanguage";
 export default function TerminosCondiciones() {
+  const language = useSiteLanguage();
+  const tx = (es: string, en: string) => language === "en" ? en : es;
   return (
     <main className="min-h-screen bg-black text-white">
  <nav
@@ -14,15 +19,15 @@ export default function TerminosCondiciones() {
 >
   <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-    <a href="/">
+    <Link href="/">
       <img
         src="/logo.png"
         alt="Traficargo"
         className="h-14"
       />
-    </a>
+    </Link>
 
-    <a
+    <Link
       href="/"
       className="
       px-5
@@ -34,8 +39,8 @@ export default function TerminosCondiciones() {
       transition
       "
     >
-      Volver al inicio
-    </a>
+      {tx("Volver al inicio", "Back to Home")}
+    </Link>
 
   </div>
 </nav>
@@ -65,11 +70,11 @@ export default function TerminosCondiciones() {
         <div className="max-w-5xl mx-auto px-6">
 
           <p className="uppercase tracking-[0.3em] text-cyan-400 mb-4">
-            Información Legal
+            {tx("Información Legal", "Legal Information")}
           </p>
 
           <h1 className="text-5xl md:text-7xl font-black mb-6">
-            Términos y Condiciones de agente de carga
+            {tx("Términos y Condiciones de agente de carga", "Freight Forwarder Terms and Conditions")}
           </h1>
 
           <p className="text-white/60">
@@ -1214,7 +1219,7 @@ AMACARGA
             href="/aviso-privacidad"
             className="hover:text-cyan-400 transition"
           >
-            Aviso de Privacidad
+            {tx("Aviso de Privacidad", "Privacy Notice")}
           </a>
         </li>
 
